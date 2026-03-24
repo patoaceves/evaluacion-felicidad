@@ -144,7 +144,7 @@ input::placeholder { color:#b0a9a4; }
   <!-- STEP 1: Lookup -->
   <div id="step-lookup" class="step">
     <div class="lookup-card">
-      <div class="eyebrow">SOPHIA · Evaluación Felicidad</div>
+      <div class="eyebrow">AUTOEVALUACIÓN · HAPPINESS WORKSHOP</div>
       <div class="accent-bar"></div>
       <h1>Bienvenido</h1>
       <p class="subtitle">Ingresa tu ID Participante para ver los módulos disponibles y continuar con tu evaluación.</p>
@@ -195,7 +195,7 @@ input::placeholder { color:#b0a9a4; }
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <p>+52 81 1988 1581<br><a href="mailto:contacto@sophiamx.org">contacto@sophiamx.org</a></p>
+      <p>+52 81 1988 1581<br><a href="/cdn-cgi/l/email-protection#debdb1b0aabfbdaab19eadb1aeb6b7bfb3a6f0b1acb9"><span class="__cf_email__" data-cfemail="62010d0c160301160d22110d120a0b030f1a4c0d1005">[email&#160;protected]</span></a></p>
       <br>
       <p><a href="https://sophiamx.org/politica-de-privacidad" target="_blank" style="color:#999;font-size:.9em;">Política de Privacidad</a></p>
     </div>
@@ -221,7 +221,7 @@ input::placeholder { color:#b0a9a4; }
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const TOKEN_PARTICIPANTES = window.__QUERY_ID_PARTICIPANTE__ || '';
 const PARTICIPANTES_URL   = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 
@@ -319,13 +319,4 @@ function showModules() {
 function backToLookup() {
   hide("step-modules");
   $("id-input").value = "";
-  $("lookup-error").classList.add("hidden");
-  show("step-lookup");
-  $("id-input").focus();
-}
-
-$("id-input").addEventListener("keydown", e => { if (e.key === "Enter") buscarID(); });
-$("btn-buscar").addEventListener("click", buscarID);
-</script>
-</body>
-</html>
+  $("lookup-erro
