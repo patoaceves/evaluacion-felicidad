@@ -211,7 +211,7 @@ h1 { font-family:'Poltawski Nowy',serif; font-size:1.7rem; font-weight:700; line
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <p>+52 81 1988 1581<br><a href="mailto:contacto@sophiamx.org">contacto@sophiamx.org</a></p>
+      <p>+52 81 1988 1581<br><a href="/cdn-cgi/l/email-protection#23404c4d574240574c63504c534b4a424e5b0d4c5144"><span class="__cf_email__" data-cfemail="c8aba7a6bca9abbca788bba7b8a0a1a9a5b0e6a7baaf">[email&#160;protected]</span></a></p>
       <br><p><a href="https://sophiamx.org/politica-de-privacidad" target="_blank" style="color:#999;font-size:.9em;">Política de Privacidad</a></p>
     </div>
     <div class="footer-col">
@@ -236,7 +236,7 @@ h1 { font-family:'Poltawski Nowy',serif; font-size:1.7rem; font-weight:700; line
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
 const MODULE            = 'Autoconocimiento';
@@ -358,14 +358,34 @@ function bandForPct(p){ return p<=45?"Bajo":p<=75?"Medio":"Alto"; }
 
 async function saveToAirtable(total,pct,band) {
   if(!TOKEN_EVALUACIONES) return {ok:false,msg:"Falta EVALUACION_FELICIDAD en Vercel."};
-  const rFields={};
-  items.forEach(([key],i)=>{rFields[`R${i+1}`]=answers.get(key)||null;});
+
+  // Solo campos editables — Total, Porcentaje y Banda son fórmulas (auto)
+  const fields = {
+    "Módulo": MODULE,
+    "Email":  participant.email,
+    "R1": answers.get(items[0][0]) || null,
+    "R2": answers.get(items[1][0]) || null,
+    "R3": answers.get(items[2][0]) || null,
+    "R4": answers.get(items[3][0]) || null,
+    "R5": answers.get(items[4][0]) || null,
+    "R6": answers.get(items[5][0]) || null,
+    "R7": answers.get(items[6][0]) || null,
+    "R8": answers.get(items[7][0]) || null,
+  };
+
+  // Linked record: campo se llama "Participantes" (plural)
+  if (participant.recordId) fields["Participantes"] = [participant.recordId];
+
   try {
-    const res = await fetch(SESIONES_URL,{method:"POST",headers:{"Authorization":`Bearer ${TOKEN_EVALUACIONES}`,"Content-Type":"application/json"},body:JSON.stringify({fields:{"Módulo":MODULE,"Email":participant.email,"ID_Participante":participant.id,...rFields,...(participant.recordId?{"Participante":[participant.recordId]}:{})}})});
+    const res = await fetch(SESIONES_URL, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${TOKEN_EVALUACIONES}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ fields })
+    });
     if(res.ok) return {ok:true};
-    const e=await res.json().catch(()=>({}));
-    return {ok:false,msg:`Airtable: "${e?.error?.message||`HTTP ${res.status}`}"`};
-  } catch(e){ return {ok:false,msg:e.message}; }
+    const e = await res.json().catch(()=>({}));
+    return {ok:false, msg:`Airtable: "${e?.error?.message || `HTTP ${res.status}`}"`};
+  } catch(e){ return {ok:false, msg:e.message}; }
 }
 
 function polarToXY(cx,cy,r,deg){const a=(deg-90)*Math.PI/180;return[cx+r*Math.cos(a),cy+r*Math.sin(a)];}
@@ -405,12 +425,4 @@ function renderResultAndSend(){
   saveToAirtable(total,pct,band).then(r=>{$("send-status").innerHTML=r.ok?"✅ Guardado":` ⚠️ ${r.msg}`;});
 }
 
-/* Carga tokens y luego arranca */
-fetch('/api/config')
-  .then(r=>r.json())
-  .then(cfg=>{TOKEN_PARTICIPANTES=cfg.tokenParticipantes||'';TOKEN_EVALUACIONES=cfg.tokenEvaluaciones||'';})
-  .catch(e=>console.warn('Config:',e))
-  .finally(()=>init());
-</script>
-</body>
-</html>
+/* Carga tokens y luego arra
