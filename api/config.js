@@ -1,5 +1,3 @@
-// api/config.js
-// Endpoint que devuelve los tokens como JSON seguro
 module.exports = (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Cache-Control', 'no-store');
