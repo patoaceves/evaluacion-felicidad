@@ -268,7 +268,7 @@ function renderQuestion(){
   $("validation").textContent="";
   $("prevBtn").disabled=idx===0;
   $("nextBtn").style.display=idx<items.length-1?"inline-flex":"none";
-  $("submitBtn").style.display=idx===items.length-1?"inline-flex":"none";
+  $("submitBtn").style.display="none";
   const sel=answers.get(key);
   $("panel").innerHTML=`<div class="q-title">${text}</div><div class="scale-row" role="radiogroup">${[1,2,3,4,5].map(v=>`<label class="scale-opt" data-val="${v}" data-checked="${sel===v}"><input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}/><span class="scale-num">${v}</span></label>`).join("")}</div>`;
   animIn();
@@ -278,14 +278,32 @@ function renderQuestion(){
       answers.set(key,v);
       $("panel").querySelectorAll(".scale-opt").forEach(x=>x.setAttribute("data-checked","false"));
       el.setAttribute("data-checked","true");
-      setTimeout(()=>{if(idx<items.length-1){idx++;renderQuestion();}else{$("nextBtn").style.display="none";$("submitBtn").style.display="inline-flex";}},200);
+      setTimeout(()=>{if(idx<items.length-1){idx++;renderQuestion();}else{showConfirm();}},200);
     });
   });
 }
 
 $("prevBtn").addEventListener("click",()=>{if(idx>0){idx--;renderQuestion();}});
 $("nextBtn").addEventListener("click",()=>{if(!answers.get(items[idx][0])){$("validation").textContent="Selecciona una opci\u00f3n para continuar.";return;}if(idx<items.length-1){idx++;renderQuestion();}});
-$("submitBtn").addEventListener("click",()=>{if(!items.every(([k])=>answers.get(k))){$("validation").textContent="Responde todas las preguntas.";return;}renderResultAndSend();});
+$("submitBtn").addEventListener("click",()=>{renderResultAndSend();});
+
+function showConfirm(){
+  // Fill bar to 100%
+  $("bar").style.width="100%";
+  $("qIndex").textContent="Pregunta 8 de 8";
+  // Hide next/submit, show prev
+  $("nextBtn").style.display="none";
+  $("submitBtn").style.display="none";
+  $("prevBtn").disabled=false;
+  // Show confirm panel
+  $("panel").innerHTML=`
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:24px;min-height:160px;">
+      <p style="font-family:'Poltawski Nowy',serif;font-size:1.3rem;font-weight:700;text-align:center;color:var(--text);">Completaste tu Autoevaluación</p>
+      <button class="btn" type="button" onclick="renderResultAndSend()" style="padding:0 48px;font-size:1rem;">Enviar Resultados</button>
+    </div>`;
+  // Make prev go back to q8
+  $("prevBtn").onclick=()=>{idx=items.length-1;renderQuestion();};
+}
 
 function computeTotal(){let s=0;items.forEach(([k])=>{const v=answers.get(k);if(v)s+=v;});return s;}
 function pctFromTotal(t){return Math.max(0,Math.min(100,Math.round(((t-8)/32)*100)));}
