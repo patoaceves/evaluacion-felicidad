@@ -1,9 +1,8 @@
 {
   "name": "evalfelicidad",
   "version": "1.0.0",
-  "description": "Evaluaciones del Happiness Workshop — Sophia",
+  "private": true,
   "engines": {
-    "node": "18.x"
-  },
-  "private": true
+    "node": "24.x"
+  }
 }
