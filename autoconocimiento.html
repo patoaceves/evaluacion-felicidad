@@ -9,27 +9,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Poltawski+Nowy:wght@600;700&display=swap" rel="stylesheet"/>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
 :root {
-  --red:        #C0112F;
-  --red-dark:   #a00f27;
-  --red-soft:   rgba(192,17,47,.12);
-  --bg:         #FFFCFA;
-  --text:       #1a1a1a;
-  --muted:      #6b7280;
-  --border:     #e5e0db;
-  --ok-bg:      #d1fae5;
-  --ok-text:    #065f46;
-  --err-bg:     #fce4e4;
-  --err-text:   #9b1c1c;
-  --radius:     18px;
-  --shadow:     0 8px 28px rgba(0,0,0,.09);
-  --area:       #7f94fe;
+  --red:#C0112F; --red-soft:rgba(192,17,47,.12);
+  --bg:#FFFCFA; --text:#1a1a1a; --muted:#6b7280; --border:#e5e0db;
+  --ok-bg:#d1fae5; --ok-text:#065f46; --err-bg:#fce4e4; --err-text:#9b1c1c;
+  --radius:18px; --shadow:0 8px 28px rgba(0,0,0,.09); --area:#7f94fe;
 }
-html { background: var(--bg); }
+html { background:var(--bg); }
 body { display:flex; flex-direction:column; min-height:100vh; font-family:'Karla',sans-serif; font-size:15px; line-height:1.6; color:var(--text); background:var(--bg); }
 
-/* Header */
 #site-header { display:flex; align-items:center; justify-content:space-between; padding:0 48px; height:95px; background:#FFFCFA; position:sticky; top:0; z-index:100; border-bottom:1px solid rgba(0,0,0,.05); }
 #site-header .logo { display:flex; align-items:center; text-decoration:none; }
 #site-header .logo img { height:118px; }
@@ -40,90 +29,75 @@ body { display:flex; flex-direction:column; min-height:100vh; font-family:'Karla
 #site-header .btn-contact:hover { background:#a00f27; }
 @media(max-width:960px){ #site-header{padding:0 20px;} #site-header nav{display:none;} }
 
-/* Layout */
 .page-center { flex:1; display:flex; align-items:flex-start; justify-content:center; padding:40px 16px 60px; }
 .card { width:100%; max-width:620px; background:#fff; border-radius:var(--radius); padding:36px 36px 32px; box-shadow:var(--shadow); animation:fadeUp .4s ease both; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 .step { animation:fadeUp .35s ease both; }
 .hidden { display:none !important; }
 
-/* Typography */
+/* Loading */
+.loading-box { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:60px 20px; }
+.load-spin { width:40px; height:40px; border:3px solid rgba(127,148,254,.2); border-top-color:var(--area); border-radius:50%; animation:spin .8s linear infinite; }
+.load-text { color:var(--muted); font-size:14px; }
+
+/* Error */
+.error-box { text-align:center; padding:40px 20px; }
+.error-box h2 { font-family:'Poltawski Nowy',serif; font-size:1.3rem; margin-bottom:8px; }
+.error-box p { color:var(--muted); font-size:14px; margin-bottom:20px; }
+
 h1 { font-family:'Poltawski Nowy',serif; font-size:1.7rem; font-weight:700; line-height:1.2; margin-bottom:6px; }
-.subtitle { color:var(--muted); font-size:14px; margin-bottom:24px; }
-.form-hint { font-size:14px; color:var(--muted); margin-bottom:22px; line-height:1.7; }
 .eyebrow { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#9b1c1c; margin-bottom:8px; }
 .accent-bar { width:3px; height:48px; background:var(--red); border-radius:2px; margin-bottom:18px; }
+.form-hint { font-size:14px; color:var(--muted); margin-bottom:22px; line-height:1.7; }
 
-/* Fields */
-.field { margin-bottom:18px; }
-label { display:block; font-size:12px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
-input[type="text"] { width:100%; height:46px; border:1.5px solid var(--border); border-radius:10px; background:var(--bg); color:var(--text); font-family:'Karla',sans-serif; font-size:15px; padding:0 14px; transition:border-color .18s,box-shadow .18s,background .18s; appearance:none; }
-input:focus { outline:none; border-color:var(--red); box-shadow:0 0 0 3px var(--red-soft); background:#fff; }
-input::placeholder { color:#b0a9a4; }
-
-/* Buttons */
-.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:46px; padding:0 24px; background:var(--red); color:#fff; font-family:'Karla',sans-serif; font-size:15px; font-weight:700; border:1.5px solid transparent; border-radius:999px; cursor:pointer; box-shadow:0 4px 16px rgba(192,17,47,.3); transition:opacity .18s,transform .12s,box-shadow .18s; text-decoration:none; white-space:nowrap; }
-.btn:hover:not(:disabled) { opacity:.9; transform:translateY(-1px); box-shadow:0 6px 22px rgba(192,17,47,.4); }
-.btn:active:not(:disabled) { transform:translateY(0); }
-.btn:disabled { opacity:.65; cursor:not-allowed; box-shadow:none; }
-.btn.secondary { background:#fff; color:var(--text); border-color:var(--border); box-shadow:none; }
-.btn.secondary:hover:not(:disabled) { border-color:var(--red); color:var(--red); box-shadow:none; }
-.btn.full { width:100%; margin-top:8px; }
-
-/* Spinner */
-.spinner { width:16px; height:16px; border:2.5px solid rgba(255,255,255,.35); border-top-color:#fff; border-radius:50%; animation:spin .65s linear infinite; flex-shrink:0; }
-@keyframes spin { to{transform:rotate(360deg)} }
-
-/* Alerts */
-.alert { border-radius:10px; padding:13px 16px; font-size:14px; line-height:1.6; margin-top:16px; animation:fadeUp .3s ease both; }
-.alert-ok  { background:var(--ok-bg);  color:var(--ok-text);  }
-.alert-err { background:var(--err-bg); color:var(--err-text); }
-.alert strong { font-weight:700; }
-.alert a { color:inherit; }
-.create-link { margin-top:20px; text-align:center; font-size:13px; color:var(--muted); }
-.create-link a { color:var(--red); font-weight:600; text-decoration:none; }
-.create-link a:hover { text-decoration:underline; }
-
-/* Greeting */
 .greeting-row { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
 .avatar { width:52px; height:52px; border-radius:50%; background:var(--area); display:flex; align-items:center; justify-content:center; font-family:'Poltawski Nowy',serif; font-size:1.4rem; font-weight:700; color:#fff; flex-shrink:0; }
 .greeting-name { font-family:'Poltawski Nowy',serif; font-size:1.5rem; font-weight:700; }
 .greeting-id { font-size:12px; color:var(--muted); margin-top:3px; }
 
-/* Progress */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:46px; padding:0 24px; background:var(--red); color:#fff; font-family:'Karla',sans-serif; font-size:15px; font-weight:700; border:1.5px solid transparent; border-radius:999px; cursor:pointer; box-shadow:0 4px 16px rgba(192,17,47,.3); transition:opacity .18s,transform .12s; text-decoration:none; white-space:nowrap; }
+.btn:hover:not(:disabled) { opacity:.9; transform:translateY(-1px); }
+.btn:disabled { opacity:.65; cursor:not-allowed; box-shadow:none; }
+.btn.secondary { background:#fff; color:var(--text); border-color:var(--border); box-shadow:none; }
+.btn.secondary:hover { border-color:var(--red); color:var(--red); }
+.btn.full { width:100%; margin-top:8px; }
+.spinner { width:16px; height:16px; border:2.5px solid rgba(255,255,255,.35); border-top-color:#fff; border-radius:50%; animation:spin .65s linear infinite; flex-shrink:0; }
+@keyframes spin { to{transform:rotate(360deg)} }
+
 .progress-wrap { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
 .progress { flex:1; height:8px; background:#F1F4F8; border-radius:999px; overflow:hidden; border:1px solid #E6EAF0; }
 .progress i { display:block; height:100%; width:0; background:var(--red); transition:width 200ms ease; border-radius:999px; }
 .q-index { font-weight:700; color:#555; min-width:110px; text-align:right; font-size:13px; }
-
-/* Stage & panel */
-.stage { min-height:200px; }
+.stage { min-height:220px; }
 .panel { opacity:0; transform:translateY(5px); transition:opacity 180ms ease,transform 180ms ease; }
 .panel.in { opacity:1; transform:translateY(0); }
-.q-title { font-family:'Poltawski Nowy',serif; font-size:1.05rem; font-weight:700; line-height:1.4; margin-bottom:10px; }
-.hint { font-size:.88rem; color:var(--muted); margin-bottom:14px; }
+.q-title { font-family:'Poltawski Nowy',serif; font-size:1.1rem; font-weight:700; line-height:1.45; margin-bottom:22px; }
 
-/* Pills */
-.pills { display:flex; gap:10px; flex-wrap:wrap; }
-.pill { position:relative; display:inline-flex; align-items:center; justify-content:center; width:56px; height:50px; border-radius:13px; border:2px solid var(--border); background:#fff; color:#222; font-weight:800; font-size:1.05rem; cursor:pointer; user-select:none; transition:transform 180ms,border 180ms,box-shadow 180ms,background 180ms,color 180ms; }
-.pill:hover { box-shadow:0 4px 14px rgba(0,0,0,.07); transform:translateY(-1px); }
-.pill input { appearance:none; position:absolute; opacity:0; inset:0; cursor:pointer; }
-.pill[data-checked="true"] { background:var(--area); border-color:var(--area); color:#fff; box-shadow:0 0 0 3px rgba(0,0,0,.08); }
+.scale-row { display:flex; gap:12px; }
+.scale-opt { position:relative; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:16px 10px; border-radius:14px; border:2px solid var(--border); background:#fff; cursor:pointer; user-select:none; transition:transform 160ms,border 160ms,box-shadow 160ms,background 160ms; min-height:90px; }
+.scale-opt:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.1); }
+.scale-opt input { appearance:none; position:absolute; opacity:0; inset:0; cursor:pointer; }
+.scale-num { font-size:1.8rem; font-weight:800; line-height:1; }
+.scale-label { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); }
+.scale-opt[data-val="1"] .scale-num { color:#c0112f; }
+.scale-opt[data-val="2"] .scale-num { color:#b07c00; }
+.scale-opt[data-val="3"] .scale-num { color:#1a7a3a; }
+.scale-opt[data-checked="true"] { border-color:var(--area); background:var(--area); box-shadow:0 0 0 3px rgba(127,148,254,.25); }
+.scale-opt[data-checked="true"] .scale-num,
+.scale-opt[data-checked="true"] .scale-label { color:#fff; }
 
-/* Controls */
-.controls { display:flex; justify-content:space-between; gap:10px; margin-top:20px; }
+.controls { display:flex; justify-content:space-between; gap:10px; margin-top:22px; }
 .validation { color:var(--red); font-weight:600; margin-top:10px; min-height:1.3em; font-size:13px; }
 
-/* Result */
 .p-bar { display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--bg); border-radius:10px; margin-bottom:20px; border:1px solid var(--border); }
 .p-av { width:38px; height:38px; border-radius:50%; background:var(--area); display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; font-size:1rem; flex-shrink:0; }
 .p-name { font-weight:700; font-size:.95rem; }
-.p-id { font-size:.78rem; color:var(--muted); }
-.result-grid { display:grid; grid-template-columns:220px 1fr; gap:22px; align-items:start; }
+.p-id-txt { font-size:.78rem; color:var(--muted); }
+.result-grid { display:grid; grid-template-columns:200px 1fr; gap:22px; align-items:start; }
 @media(max-width:540px){ .result-grid{grid-template-columns:1fr} }
-.wedge-wrap { position:relative; width:220px; height:220px; }
+.wedge-wrap { position:relative; width:200px; height:200px; }
 .wedge-wrap svg { display:block; width:100%; height:100%; }
-.pct-label { position:absolute; left:0; right:0; top:50%; transform:translateY(-50%); text-align:center; font-size:1.5rem; font-weight:800; color:var(--text); pointer-events:none; }
+.pct-label { position:absolute; left:0; right:0; top:50%; transform:translateY(-50%); text-align:center; font-size:1.4rem; font-weight:800; color:var(--text); pointer-events:none; }
 .band-tag { font-size:.78rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; display:inline-flex; align-items:center; gap:7px; padding:5px 12px; border-radius:999px; border:1.5px solid currentColor; margin-bottom:8px; }
 .band-dot { width:8px; height:8px; border-radius:50%; background:currentColor; }
 .result-title { font-family:'Poltawski Nowy',serif; font-size:1.15rem; font-weight:700; margin-bottom:8px; }
@@ -132,7 +106,27 @@ input::placeholder { color:#b0a9a4; }
 .steps-list { padding-left:18px; margin-bottom:14px; }
 .steps-list li { margin-bottom:6px; line-height:1.7; color:#333; font-size:.92rem; }
 .result-note { font-size:.83rem; color:#999; line-height:1.6; margin-bottom:18px; }
-.send-status { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); margin-top:10px; }
+.send-status { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--muted); margin-top:12px; flex-wrap:wrap; }
+.spin-sm { width:12px; height:12px; border:2px solid rgba(0,0,0,.15); border-top-color:#888; border-radius:50%; animation:spin .65s linear infinite; }
+
+#site-footer { background:#f5f5f5; padding:52px 60px 32px; margin-top:auto; }
+.footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:48px; margin-bottom:40px; align-items:start; }
+.footer-brand img { height:101px; display:block; margin-bottom:20px; }
+.footer-brand a { display:block; text-decoration:none; color:#333; font-size:1em; font-weight:400; margin-bottom:10px; text-transform:uppercase; letter-spacing:.07em; transition:color .2s; }
+.footer-brand a:hover { color:#c0112f; }
+.footer-col h4 { font-size:.72em; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:#aaa; margin-bottom:14px; }
+.footer-col p { font-size:.86em; color:#555; line-height:1.75; }
+.footer-col p a { color:#c0112f; text-decoration:none; }
+.social-icons { display:flex; gap:12px; margin-bottom:20px; }
+.social-icons a { width:38px; height:38px; border-radius:50%; background:#c0112f; display:flex; align-items:center; justify-content:center; text-decoration:none; transition:background .2s; flex-shrink:0; }
+.social-icons a:hover { background:#a00f27; }
+.social-icons svg { width:17px; height:17px; fill:white; }
+.footer-btn { display:inline-block; background:#c0112f; color:white; border-radius:8px; padding:11px 22px; font-size:.82em; font-weight:600; font-family:'Karla',sans-serif; text-decoration:none; white-space:nowrap; transition:background .2s; }
+.footer-btn:hover { background:#a00f27; }
+.footer-bottom { border-top:1px solid #ddd; padding-top:20px; display:flex; justify-content:space-between; align-items:center; font-size:.78em; color:#aaa; }
+.footer-bottom a { color:#aaa; text-decoration:none; }
+.footer-bottom a:hover { color:#c0112f; }
+@media(max-width:768px){ #site-footer{padding:36px 20px 24px;} .footer-grid{grid-template-columns:1fr 1fr;gap:28px;} .footer-bottom{flex-direction:column;gap:8px;text-align:center;} }
 </style>
 </head>
 <body>
@@ -154,27 +148,22 @@ input::placeholder { color:#b0a9a4; }
 
 <div class="page-center">
 <div class="card">
-
-  <!-- STEP 1: Lookup -->
-  <div id="step-lookup" class="step">
-    <div class="eyebrow">SOPHIA · Evaluación Felicidad</div>
-    <div class="accent-bar"></div>
-    <h1>Autoconocimiento</h1>
-    <p class="subtitle">Ingresa tu ID Participante para comenzar.</p>
-    <div class="field">
-      <label for="id-input">ID Participante</label>
-      <input type="text" id="id-input" placeholder="Ej: MAR123456" autocomplete="off" spellcheck="false"/>
-    </div>
-    <button class="btn full" id="btn-buscar" type="button">Buscar</button>
-    <div id="lookup-error" class="alert alert-err hidden"></div>
-    <div class="create-link">
-      ¿No tienes ID aún? <a href="https://participantes.sophiamx.org" target="_blank">Créalo aquí</a>
+  <div id="state-loading" class="step">
+    <div class="loading-box">
+      <div class="load-spin"></div>
+      <div class="load-text">Cargando tu perfil…</div>
     </div>
   </div>
-
-  <!-- STEP 2: Greeting -->
-  <div id="step-found" class="step hidden">
-    <div class="eyebrow">SOPHIA · Evaluación Felicidad</div>
+  <div id="state-error" class="step hidden">
+    <div class="error-box">
+      <h2>No encontramos tu perfil</h2>
+      <p id="error-msg">Accede desde el portal para comenzar.</p>
+      <a class="btn" href="/">← Ir al portal</a>
+    </div>
+  </div>
+  <div id="step-greeting" class="step hidden">
+    <div class="eyebrow">AUTOEVALUACIÓN · HAPPINESS WORKSHOP</div>
+    <div class="accent-bar"></div>
     <div class="greeting-row">
       <div class="avatar" id="greeting-avatar">?</div>
       <div>
@@ -182,11 +171,10 @@ input::placeholder { color:#b0a9a4; }
         <div class="greeting-id" id="greeting-id-txt"></div>
       </div>
     </div>
-    <p class="form-hint">Contesta cada ítem con <strong>1</strong> si te va mal en ese aspecto, <strong>2</strong> si te sientes neutro/a, y <strong>3</strong> si te va bien.</p>
+    <h1>Autoconocimiento</h1>
+    <p class="form-hint">Responde cada pregunta eligiendo <strong>1</strong> si te va mal, <strong>2</strong> si te sientes neutro/a, o <strong>3</strong> si te va bien.</p>
     <button class="btn full" type="button" id="btn-start">Comenzar evaluación →</button>
   </div>
-
-  <!-- STEP 3: Quiz -->
   <div id="step-quiz" class="step hidden">
     <div class="progress-wrap">
       <div class="progress"><i id="bar"></i></div>
@@ -202,73 +190,93 @@ input::placeholder { color:#b0a9a4; }
     </div>
     <div id="validation" class="validation"></div>
   </div>
-
-  <!-- STEP 4: Result -->
   <div id="step-result" class="step hidden"></div>
+</div>
+</div>
 
-</div>
-</div>
+<footer id="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="https://static.wixstatic.com/media/6bf1ef_d0efb91350e04315be1fe1a9982e69c8~mv2.png" alt="Sophia">
+      <a href="https://sophiamx.org" target="_blank">Home</a>
+      <a href="https://sophiamx.org/sophia" target="_blank">Sophia</a>
+      <a href="https://sophiamx.org/estudia" target="_blank">Estudia</a>
+      <a href="https://sophiamx.org/coaching" target="_blank">Coaching</a>
+      <a href="https://sophiamx.org/embajadores" target="_blank">Embajadores</a>
+      <a href="https://sophiamx.org/consultoria" target="_blank">Consultoría</a>
+    </div>
+    <div class="footer-col">
+      <h4>Sede Principal</h4>
+      <p>Akadem:<br>Río Suchiate 722, Zona Tampiquito,<br>Lomas del Valle, 66256<br>San Pedro Garza García</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <p>+52 81 1988 1581<br><a href="mailto:contacto@sophiamx.org">contacto@sophiamx.org</a></p>
+      <br><p><a href="https://sophiamx.org/politica-de-privacidad" target="_blank" style="color:#999;font-size:.9em;">Política de Privacidad</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Redes Sociales</h4>
+      <div class="social-icons">
+        <a href="https://instagram.com/sophiamx" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://facebook.com/sophiamx" target="_blank" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://linkedin.com/company/sophiamx" target="_blank" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+      <a class="footer-btn" href="https://sophiamx.org/contacto" target="_blank">Contáctanos</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Sophia. Todos los derechos reservados.</span>
+    <a href="https://sophiamx.org/politica-de-privacidad" target="_blank">Política de Privacidad</a>
+  </div>
+</footer>
 
 <script>
-/* ── CONFIG ── */
-// Token para buscar participantes (base de participantes)
-let TOKEN_PARTICIPANTES = '';
-// Token para guardar sesiones (base de evaluaciones)
-let TOKEN_EVALUACIONES  = '';
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
 const MODULE            = 'Autoconocimiento';
 const AREA_COLOR        = '#7f94fe';
+let TOKEN_PARTICIPANTES = '';
+let TOKEN_EVALUACIONES  = '';
 
 const items = [
-  ["adecuadamente",    "¿Reconozco y utilizo mis fortalezas en el momento y lugar adecuados para lo que la situación requiere?"],
-  ["disfrute",         "¿He experimentado alegría o satisfacción al descubrir aspectos nuevos de mí mismo, más allá de logros externos?"],
-  ["emociones_pos",    "¿De qué manera el conocerme mejor influye en mi capacidad para generar y mantener estados emocionales armoniosos?"],
-  ["compromiso",       "¿Me comprometo de manera persistente con mi propio crecimiento personal y autoconocimiento, incluso cuando es incómodo?"],
-  ["logro",            "¿Cuándo he superado una limitación personal o he potenciado una fortaleza gracias a mi autoconocimiento?"],
-  ["satisfaccion",     "¿Siento que el conocimiento que tengo de mí mismo corresponde con la persona que quiero llegar a ser?"],
-  ["sentido",          "¿De qué forma conocer mis fortalezas y debilidades me ayuda a encontrar un propósito más profundo en mi vida?"],
-  ["trascendencia",    "¿Cómo puede mi autoconocimiento contribuir al bienestar de otros o inspirar a quienes me rodean?"]
+  ["adecuadamente", "¿Reconozco y utilizo mis fortalezas en el momento y lugar adecuados para lo que la situación requiere?"],
+  ["disfrute",      "¿He experimentado alegría o satisfacción al descubrir aspectos nuevos de mí mismo, más allá de logros externos?"],
+  ["emociones_pos", "¿De qué manera el conocerme mejor influye en mi capacidad para generar y mantener estados emocionales armoniosos?"],
+  ["compromiso",    "¿Me comprometo de manera persistente con mi propio crecimiento personal y autoconocimiento, incluso cuando es incómodo?"],
+  ["logro",         "¿Cuándo he superado una limitación personal o he potenciado una fortaleza gracias a mi autoconocimiento?"],
+  ["satisfaccion",  "¿Siento que el conocimiento que tengo de mí mismo corresponde con la persona que quiero llegar a ser?"],
+  ["sentido",       "¿De qué forma conocer mis fortalezas y debilidades me ayuda a encontrar un propósito más profundo en mi vida?"],
+  ["trascendencia", "¿Cómo puede mi autoconocimiento contribuir al bienestar de otros o inspirar a quienes me rodean?"]
 ];
 
 const bandTexts = {
-  "Alto":  { color:"#2E7D32", lead:"Autoconocimiento sólido. Sabes nombrar lo que te pasa, reconocer tus patrones y ajustar tus decisiones con realismo y propósito. Mantén este músculo activo.", steps:["Usa una fortaleza en una forma nueva cada día (15 min). Identifica tus fortalezas de carácter y aplícalas de manera creativa en tareas cotidianas.","Tres cosas buenas (5 min cada noche). Registra lo positivo del día y tu papel en ello."] },
-  "Medio": { color:"#C88D2D", lead:"Vas en buen camino. Ya tienes claridad en varios aspectos, pero hay momentos de duda o automatismo. Este es el mejor punto para sistematizar hábitos.", steps:["Mejor Yo Posible (1 sesión de 15 min, luego revisión semanal). Escribe tu mejor versión dentro de 6–12 meses y el primer micro-paso.","Diario de fortalezas (10 min, 2–3 veces/semana). Elige una fortaleza y anota cómo la usaste."] },
-  "Bajo":  { color:"#B00020", lead:"Punto de partida claro. Hoy cuesta leer tus estados internos y orientar decisiones desde ahí. La buena noticia: el autoconocimiento se entrena con prácticas breves y consistentes.", steps:["Tres cosas buenas (diario). Empieza por reconectar con lo que sí funciona.","Una fortaleza, un uso nuevo (diario, 10–15 min). Pequeños experimentos cotidianos con tus fortalezas ayudan a construir sentido y energía."] },
-  note: "Nota de rigor: Estos resultados no son diagnósticos. Úsalos como línea base personal y vuelve a medir tras 2–4 semanas de práctica para observar tendencia."
+  "Alto":  { color:"#2E7D32", lead:"Autoconocimiento sólido. Sabes nombrar lo que te pasa, reconocer tus patrones y ajustar tus decisiones con realismo y propósito.", steps:["Usa una fortaleza en una forma nueva cada día (15 min).","Tres cosas buenas (5 min cada noche). Registra lo positivo del día y tu papel en ello."] },
+  "Medio": { color:"#C88D2D", lead:"Vas en buen camino. Ya tienes claridad en varios aspectos, pero hay momentos de duda. Este es el mejor punto para sistematizar hábitos.", steps:["Mejor Yo Posible (15 min). Escribe tu mejor versión dentro de 6–12 meses y el primer micro-paso.","Diario de fortalezas (10 min, 2–3 veces/semana)."] },
+  "Bajo":  { color:"#B00020", lead:"Punto de partida claro. Hoy cuesta leer tus estados internos. La buena noticia: el autoconocimiento se entrena con prácticas breves y consistentes.", steps:["Tres cosas buenas (diario). Empieza por reconectar con lo que sí funciona.","Una fortaleza, un uso nuevo (diario, 10–15 min)."] },
+  note: "Nota: Estos resultados no son diagnósticos. Úsalos como línea base y vuelve a medir tras 2–4 semanas."
 };
 
-/* ── STATE ── */
 let participant = { recordId:"", id:"", nombre:"", apellidos:"", email:"" };
 let idx = 0;
 const answers = new Map();
 
-/* ── UTILS ── */
-const $       = id => document.getElementById(id);
-const show    = id => $(id).classList.remove("hidden");
-const hide    = id => $(id).classList.add("hidden");
+const $    = id => document.getElementById(id);
+const show = id => $(id).classList.remove("hidden");
+const hide = id => $(id).classList.add("hidden");
 
-function setBtn(btn, label, loading) {
-  btn.disabled = loading;
-  btn.innerHTML = loading ? `<span class="spinner"></span>${label}` : label;
-}
-function showErr(id, msg) {
-  const el = $(id);
-  el.innerHTML = `<strong>Error:</strong> ${msg}`;
-  el.classList.remove("hidden");
-}
-function hideErr(id) { $(id).classList.add("hidden"); }
+/* ── INIT: lee ?id= del URL, NO muestra login ── */
+async function init() {
+  const idParam = new URLSearchParams(window.location.search).get('id') || '';
+  if (!idParam) { showError('Accede desde el <a href="/">portal de evaluaciones</a>.'); return; }
 
-/* ── LOOKUP ── */
-async function buscarID() {
-  const raw = $("id-input").value.trim().toUpperCase();
-  const btn = $("btn-buscar");
-  hideErr("lookup-error");
-  if (!raw) { showErr("lookup-error", "Ingresa tu ID Participante."); $("id-input").focus(); return; }
-
-  setBtn(btn, "Buscando…", true);
   try {
-    const formula = encodeURIComponent(`({ID Participante}="${raw}")`);
+    const formula = encodeURIComponent(`({ID Participante}="${idParam.toUpperCase()}")`);
     const res = await fetch(`${PARTICIPANTES_URL}?filterByFormula=${formula}`, {
       headers: { Authorization: `Bearer ${TOKEN_PARTICIPANTES}` }
     });
@@ -278,251 +286,131 @@ async function buscarID() {
     if (data.records && data.records.length > 0) {
       const rec = data.records[0];
       const f   = rec.fields || {};
-      participant = {
-        recordId:  rec.id,
-        id:        f["ID Participante"] || raw,
-        nombre:    f["Nombre"]          || "",
-        apellidos: f["Apellidos"]       || "",
-        email:     f["Email"]           || ""
-      };
-      $("greeting-avatar").textContent = (participant.nombre || participant.id).charAt(0).toUpperCase();
+      participant = { recordId:rec.id, id:f["ID Participante"]||idParam, nombre:f["Nombre"]||"", apellidos:f["Apellidos"]||"", email:f["Email"]||"" };
+      hide("state-loading");
+      $("greeting-avatar").textContent = (participant.nombre||participant.id).charAt(0).toUpperCase();
       $("greeting-name").textContent   = participant.nombre || participant.id;
       $("greeting-id-txt").textContent = `ID: ${participant.id}`;
-      hide("step-lookup");
-      show("step-found");
+      show("step-greeting");
     } else {
-      showErr("lookup-error", `No encontramos el ID <strong>${raw}</strong>. Verifica que sea correcto o <a href="https://participantes.sophiamx.org" target="_blank">crea tu perfil aquí</a>.`);
+      showError(`No encontramos el ID <strong>${idParam}</strong>. <a href="/">Volver al portal</a>.`);
     }
   } catch(e) {
-    showErr("lookup-error", e.message || "No pudimos conectar. Intenta de nuevo.");
-  } finally {
-    setBtn(btn, "Buscar", false);
+    showError(`Error: ${e.message}. <a href="/">Volver al portal</a>.`);
   }
 }
 
-$("id-input").addEventListener("keydown", e => { if (e.key === "Enter") buscarID(); });
-$("btn-buscar").addEventListener("click", buscarID);
-$("btn-start").addEventListener("click", startQuiz);
-
-/* ── QUIZ ── */
-function startQuiz() {
-  idx = 0; answers.clear();
-  hide("step-found"); show("step-quiz");
-  renderQuestion();
+function showError(msg) {
+  hide("state-loading");
+  $("error-msg").innerHTML = msg;
+  show("state-error");
 }
 
-const animIn = () => {
-  const p = $("panel");
-  p.classList.remove("in");
-  requestAnimationFrame(() => requestAnimationFrame(() => p.classList.add("in")));
-};
+$("btn-start").addEventListener("click", () => { hide("step-greeting"); show("step-quiz"); renderQuestion(); });
 
-function updateProgress() {
-  $("bar").style.width    = Math.round((idx / items.length) * 100) + "%";
-  $("qIndex").textContent = `Pregunta ${Math.min(idx + 1, items.length)} de ${items.length}`;
-}
+const animIn = () => { const p=$("panel"); p.classList.remove("in"); requestAnimationFrame(()=>requestAnimationFrame(()=>p.classList.add("in"))); };
+function updateProgress() { $("bar").style.width=Math.round((idx/items.length)*100)+"%"; $("qIndex").textContent=`Pregunta ${Math.min(idx+1,items.length)} de ${items.length}`; }
 
+const LABELS = {1:"Mal", 2:"Neutro", 3:"Bien"};
 function renderQuestion() {
-  const [key, text] = items[idx];
+  const [key,text] = items[idx];
   updateProgress();
   $("validation").textContent = "";
-  $("prevBtn").disabled        = idx === 0;
-  $("nextBtn").style.display   = idx < items.length - 1 ? "inline-flex" : "none";
-  $("submitBtn").style.display = idx === items.length - 1 ? "inline-flex" : "none";
-
+  $("prevBtn").disabled        = idx===0;
+  $("nextBtn").style.display   = idx<items.length-1?"inline-flex":"none";
+  $("submitBtn").style.display = idx===items.length-1?"inline-flex":"none";
   const sel = answers.get(key);
   $("panel").innerHTML = `
     <div class="q-title">${text}</div>
-    <div class="hint">Elige 1 (vas mal), 2 (neutro) o 3 (vas bien).</div>
-    <div class="pills" role="radiogroup">
-      ${[1,2,3].map(v => `
-        <label class="pill" data-val="${v}" data-checked="${sel===v}">
+    <div class="scale-row" role="radiogroup">
+      ${[1,2,3].map(v=>`
+        <label class="scale-opt" data-val="${v}" data-checked="${sel===v}">
           <input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}/>
-          <span>${v}</span>
+          <span class="scale-num">${v}</span>
+          <span class="scale-label">${LABELS[v]}</span>
         </label>`).join("")}
     </div>`;
   animIn();
-
-  $("panel").querySelectorAll(".pill").forEach(el => {
+  $("panel").querySelectorAll(".scale-opt").forEach(el => {
     el.addEventListener("click", () => {
       const v = Number(el.getAttribute("data-val"));
       answers.set(key, v);
-      $("panel").querySelectorAll(".pill").forEach(x => x.setAttribute("data-checked","false"));
+      $("panel").querySelectorAll(".scale-opt").forEach(x=>x.setAttribute("data-checked","false"));
       el.setAttribute("data-checked","true");
-      setTimeout(() => {
-        if (idx < items.length - 1) { idx++; renderQuestion(); }
-        else { $("nextBtn").style.display="none"; $("submitBtn").style.display="inline-flex"; }
-      }, 160);
+      setTimeout(()=>{ if(idx<items.length-1){idx++;renderQuestion();}else{$("nextBtn").style.display="none";$("submitBtn").style.display="inline-flex";} }, 200);
     });
   });
 }
 
-$("prevBtn").addEventListener("click", () => { if (idx > 0) { idx--; renderQuestion(); } });
-$("nextBtn").addEventListener("click", () => {
-  if (!answers.get(items[idx][0])) { $("validation").textContent = "Selecciona una opción para continuar."; return; }
-  if (idx < items.length - 1) { idx++; renderQuestion(); }
+$("prevBtn").addEventListener("click", ()=>{ if(idx>0){idx--;renderQuestion();} });
+$("nextBtn").addEventListener("click", ()=>{
+  if(!answers.get(items[idx][0])){$("validation").textContent="Selecciona una opción para continuar.";return;}
+  if(idx<items.length-1){idx++;renderQuestion();}
 });
-$("submitBtn").addEventListener("click", () => {
-  if (!items.every(([k]) => answers.get(k))) { $("validation").textContent = "Responde todas las preguntas."; return; }
+$("submitBtn").addEventListener("click", ()=>{
+  if(!items.every(([k])=>answers.get(k))){$("validation").textContent="Responde todas las preguntas.";return;}
   renderResultAndSend();
 });
 
-/* ── SCORING ── */
-function computeTotal() {
-  let s = 0; items.forEach(([k]) => { const v = answers.get(k); if (v) s += v; }); return s;
-}
-function pctFromTotal(t) { return Math.max(0, Math.min(100, Math.round(((t-8)/16)*100))); }
-function bandForPct(p)   { return p <= 45 ? "Bajo" : p <= 75 ? "Medio" : "Alto"; }
+function computeTotal(){ let s=0; items.forEach(([k])=>{const v=answers.get(k);if(v)s+=v;}); return s; }
+function pctFromTotal(t){ return Math.max(0,Math.min(100,Math.round(((t-8)/16)*100))); }
+function bandForPct(p){ return p<=45?"Bajo":p<=75?"Medio":"Alto"; }
 
-/* ── SAVE TO AIRTABLE ── */
-async function saveToAirtable(total, pct, band) {
-  const rFields = {};
-  items.forEach(([key], i) => { rFields[`R${i+1}`] = answers.get(key) || null; });
-
-  const fields = {
-    "Módulo":          MODULE,
-    "Email":           participant.email,
-    "ID_Participante": participant.id,
-    ...rFields,
-    ...(participant.recordId ? { "Participante": [participant.recordId] } : {})
-  };
-
+async function saveToAirtable(total,pct,band) {
+  if(!TOKEN_EVALUACIONES) return {ok:false,msg:"Falta EVALUACION_FELICIDAD en Vercel."};
+  const rFields={};
+  items.forEach(([key],i)=>{rFields[`R${i+1}`]=answers.get(key)||null;});
   try {
-    const res = await fetch(SESIONES_URL, {
-      method: "POST",
-      headers: { "Authorization": `Bearer ${TOKEN_EVALUACIONES}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ fields })
-    });
-    return res.ok;
-  } catch(e) {
-    console.warn("Error guardando en Airtable:", e);
-    return false;
-  }
+    const res = await fetch(SESIONES_URL,{method:"POST",headers:{"Authorization":`Bearer ${TOKEN_EVALUACIONES}`,"Content-Type":"application/json"},body:JSON.stringify({fields:{"Módulo":MODULE,"Email":participant.email,"ID_Participante":participant.id,...rFields,...(participant.recordId?{"Participante":[participant.recordId]}:{})}})});
+    if(res.ok) return {ok:true};
+    const e=await res.json().catch(()=>({}));
+    return {ok:false,msg:`Airtable: "${e?.error?.message||`HTTP ${res.status}`}"`};
+  } catch(e){ return {ok:false,msg:e.message}; }
 }
 
-/* ── WEDGE SVG ── */
-function polarToXY(cx, cy, r, deg) {
-  const a = (deg - 90) * Math.PI / 180;
-  return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
-}
-function arcPath(cx, cy, r, a0, a1) {
-  const [x0,y0] = polarToXY(cx,cy,r,a0);
-  const [x1,y1] = polarToXY(cx,cy,r,a1);
-  return `M ${x0} ${y0} A ${r} ${r} 0 ${(a1-a0)<=180?0:1} 1 ${x1} ${y1}`;
-}
-function drawWedge(container, pct) {
-  const size=220, cx=size/2, cy=size/2, start=270, end=360;
-  const rings=6, gap=5, thick=13, inner=45;
-  const ns = "http://www.w3.org/2000/svg";
-  const svg = document.createElementNS(ns,"svg");
-  svg.setAttribute("viewBox",`0 0 ${size} ${size}`);
-
-  for (let i=0;i<rings;i++){
-    const r=inner+i*(thick+gap)+thick/2;
-    const p=document.createElementNS(ns,"path");
-    p.setAttribute("d",arcPath(cx,cy,r,start,end));
-    p.setAttribute("fill","none"); p.setAttribute("stroke","rgba(0,0,0,.08)");
-    p.setAttribute("stroke-width",thick); svg.appendChild(p);
-  }
-  for (let i=1;i<rings;i++){
-    const r=inner+i*(thick+gap);
-    const d=document.createElementNS(ns,"path");
-    d.setAttribute("d",arcPath(cx,cy,r,start,end));
-    d.setAttribute("fill","none"); d.setAttribute("stroke","#fff");
-    d.setAttribute("stroke-width","2"); svg.appendChild(d);
-  }
-  const perRing=100/rings, full=Math.floor(pct/perRing), partial=(pct-full*perRing)/perRing;
-  for (let i=0;i<full;i++){
-    const r=inner+i*(thick+gap)+thick/2;
-    const p=document.createElementNS(ns,"path");
-    p.setAttribute("d",arcPath(cx,cy,r,start,end));
-    p.setAttribute("fill","none"); p.setAttribute("stroke",AREA_COLOR);
-    p.setAttribute("stroke-width",thick); svg.appendChild(p);
-  }
-  if (partial > 0 && full < rings){
-    const r=inner+full*(thick+gap)+thick/2;
-    const p=document.createElementNS(ns,"path");
-    p.setAttribute("d",arcPath(cx,cy,r,start,end));
-    p.setAttribute("fill","none"); p.setAttribute("stroke",AREA_COLOR);
-    p.setAttribute("stroke-width",thick); svg.appendChild(p);
-    requestAnimationFrame(()=>{
-      const len=p.getTotalLength();
-      p.setAttribute("stroke-dasharray",`${len*partial} ${len*(1-partial)}`);
-    });
-  }
-  container.innerHTML=""; container.appendChild(svg);
+function polarToXY(cx,cy,r,deg){const a=(deg-90)*Math.PI/180;return[cx+r*Math.cos(a),cy+r*Math.sin(a)];}
+function arcPath(cx,cy,r,a0,a1){const[x0,y0]=polarToXY(cx,cy,r,a0);const[x1,y1]=polarToXY(cx,cy,r,a1);return`M ${x0} ${y0} A ${r} ${r} 0 ${(a1-a0)<=180?0:1} 1 ${x1} ${y1}`;}
+function drawWedge(container,pct){
+  const size=200,cx=size/2,cy=size/2,start=270,end=360,rings=6,gap=5,thick=12,inner=40,ns="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(ns,"svg");svg.setAttribute("viewBox",`0 0 ${size} ${size}`);
+  for(let i=0;i<rings;i++){const r=inner+i*(thick+gap)+thick/2;const p=document.createElementNS(ns,"path");p.setAttribute("d",arcPath(cx,cy,r,start,end));p.setAttribute("fill","none");p.setAttribute("stroke","rgba(0,0,0,.08)");p.setAttribute("stroke-width",thick);svg.appendChild(p);}
+  for(let i=1;i<rings;i++){const r=inner+i*(thick+gap);const d=document.createElementNS(ns,"path");d.setAttribute("d",arcPath(cx,cy,r,start,end));d.setAttribute("fill","none");d.setAttribute("stroke","#fff");d.setAttribute("stroke-width","2");svg.appendChild(d);}
+  const perRing=100/rings,full=Math.floor(pct/perRing),partial=(pct-full*perRing)/perRing;
+  for(let i=0;i<full;i++){const r=inner+i*(thick+gap)+thick/2;const p=document.createElementNS(ns,"path");p.setAttribute("d",arcPath(cx,cy,r,start,end));p.setAttribute("fill","none");p.setAttribute("stroke",AREA_COLOR);p.setAttribute("stroke-width",thick);svg.appendChild(p);}
+  if(partial>0&&full<rings){const r=inner+full*(thick+gap)+thick/2;const p=document.createElementNS(ns,"path");p.setAttribute("d",arcPath(cx,cy,r,start,end));p.setAttribute("fill","none");p.setAttribute("stroke",AREA_COLOR);p.setAttribute("stroke-width",thick);svg.appendChild(p);requestAnimationFrame(()=>{const len=p.getTotalLength();p.setAttribute("stroke-dasharray",`${len*partial} ${len*(1-partial)}`);});}
+  container.innerHTML="";container.appendChild(svg);
 }
 
-/* ── RESULT ── */
-function renderResultAndSend() {
-  const total = computeTotal();
-  const pct   = pctFromTotal(total);
-  const band  = bandForPct(pct);
-  const bt    = bandTexts[band];
-  const ini   = (participant.nombre || participant.id).charAt(0).toUpperCase();
-
-  $("bar").style.width="100%"; $("qIndex").textContent="Resultado";
-  ["prevBtn","nextBtn","submitBtn"].forEach(id => $(id).style.display="none");
-  hide("step-quiz"); show("step-result");
-
-  $("step-result").innerHTML = `
-    <div class="p-bar">
-      <div class="p-av">${ini}</div>
-      <div>
-        <div class="p-name">${participant.nombre} ${participant.apellidos}</div>
-        <div class="p-id">ID: ${participant.id}</div>
-      </div>
-    </div>
+function renderResultAndSend(){
+  const total=computeTotal(),pct=pctFromTotal(total),band=bandForPct(pct),bt=bandTexts[band],ini=(participant.nombre||participant.id).charAt(0).toUpperCase();
+  $("bar").style.width="100%";$("qIndex").textContent="Resultado";
+  ["prevBtn","nextBtn","submitBtn"].forEach(id=>$(id).style.display="none");
+  hide("step-quiz");show("step-result");
+  $("step-result").innerHTML=`
+    <div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div>
     <div class="result-grid">
+      <div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div>
       <div>
-        <div class="wedge-wrap">
-          <div id="wedgeMount"></div>
-          <div class="pct-label">${pct}%</div>
-        </div>
-      </div>
-      <div>
-        <div class="band-tag" style="color:${bt.color}">
-          <span class="band-dot"></span>Nivel ${band}
-        </div>
+        <div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>Nivel ${band}</div>
         <div class="result-title">${MODULE}</div>
         <p class="result-lead">${bt.lead}</p>
         <div class="steps-label">Siguiente paso (1–2 semanas)</div>
-        <ul class="steps-list">
-          ${bt.steps.map(s=>`<li>${s}</li>`).join("")}
-        </ul>
+        <ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul>
         <p class="result-note">${bandTexts.note}</p>
-        <button class="btn secondary" type="button" onclick="reiniciar()">← Reiniciar</button>
-        <div class="send-status" id="send-status">
-          <span class="spinner" style="border-color:rgba(0,0,0,.15);border-top-color:#888;"></span>
-          Guardando resultados…
-        </div>
+        <a class="btn secondary" href="/">← Volver a módulos</a>
+        <div class="send-status" id="send-status"><span class="spin-sm"></span> Guardando…</div>
       </div>
     </div>`;
-
-  drawWedge($("wedgeMount"), pct);
-  saveToAirtable(total, pct, band).then(ok => {
-    $("send-status").innerHTML = ok ? "✅ Guardado correctamente" : "⚠️ No se pudo guardar. Verifica tu conexión.";
-  });
+  drawWedge($("wedgeMount"),pct);
+  saveToAirtable(total,pct,band).then(r=>{$("send-status").innerHTML=r.ok?"✅ Guardado":` ⚠️ ${r.msg}`;});
 }
 
-/* ── RESTART ── */
-function reiniciar() {
-  answers.clear(); idx=0;
-  hide("step-result");
-  $("id-input").value="";
-  hideErr("lookup-error");
-  show("step-lookup");
-  $("id-input").focus();
-}
-/* START */
+/* Carga tokens y luego arranca */
 fetch('/api/config')
-  .then(r => r.json())
-  .then(cfg => {
-    TOKEN_PARTICIPANTES = cfg.tokenParticipantes || '';
-    TOKEN_EVALUACIONES  = cfg.tokenEvaluaciones  || '';
-  })
-  .catch(e => console.warn('Config error:', e))
-  .finally(() => init());
+  .then(r=>r.json())
+  .then(cfg=>{TOKEN_PARTICIPANTES=cfg.tokenParticipantes||'';TOKEN_EVALUACIONES=cfg.tokenEvaluaciones||'';})
+  .catch(e=>console.warn('Config:',e))
+  .finally(()=>init());
 </script>
 </body>
 </html>
