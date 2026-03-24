@@ -65,13 +65,9 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
 .scale-opt{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 10px;border-radius:14px;border:2px solid var(--border);background:#fff;cursor:pointer;user-select:none;transition:transform 160ms,border 160ms,box-shadow 160ms,background 160ms;min-height:90px;}
 .scale-opt:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.1);}
 .scale-opt input{appearance:none;position:absolute;opacity:0;inset:0;cursor:pointer;}
-.scale-num{font-size:1.8rem;font-weight:800;line-height:1;}
-.scale-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
-.scale-opt[data-val="1"] .scale-num{color:#c0112f;}
-.scale-opt[data-val="2"] .scale-num{color:#b07c00;}
-.scale-opt[data-val="3"] .scale-num{color:#1a7a3a;}
+.scale-num{font-size:1.6rem;font-weight:800;line-height:1;color:#333;}
 .scale-opt[data-checked="true"]{border-color:var(--area);background:var(--area);box-shadow:0 0 0 3px rgba(127,148,254,.25);}
-.scale-opt[data-checked="true"] .scale-num,.scale-opt[data-checked="true"] .scale-label{color:#fff;}
+.scale-opt[data-checked="true"] .scale-num{color:#fff;}
 .controls{display:flex;justify-content:space-between;gap:10px;margin-top:22px;}
 .validation{color:var(--red);font-weight:600;margin-top:10px;min-height:1.3em;font-size:13px;}
 .p-bar{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border-radius:10px;margin-bottom:20px;border:1px solid var(--border);}
@@ -150,7 +146,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
       </div>
     </div>
     <h1>Autoconocimiento</h1>
-    <p class="form-hint">Responde cada pregunta eligiendo <strong>1</strong> si te va mal, <strong>2</strong> si te sientes neutro/a, o <strong>3</strong> si te va bien.</p>
+    <p class="form-hint">Responde cada pregunta en una escala del <strong>1</strong> al <strong>5</strong>, donde 1 es muy mal y 5 es muy bien.</p>
     <button class="btn full" type="button" id="btn-start">Comenzar evaluación →</button>
   </div>
   <div id="step-quiz" class="step hidden">
@@ -188,7 +184,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <p>+52 81 1988 1581<br><a href="mailto:contacto@sophiamx.org">contacto@sophiamx.org</a></p>
+      <p>+52 81 1988 1581<br><a href="/cdn-cgi/l/email-protection#8cefe3e2f8edeff8e3ccffe3fce4e5ede1f4a2e3feeb"><span class="__cf_email__" data-cfemail="adcec2c3d9ccced9c2eddec2ddc5c4ccc0d583c2dfca">[email&#160;protected]</span></a></p>
       <br><p><a href="https://sophiamx.org/politica-de-privacidad" target="_blank" style="color:#999;font-size:.9em;">Política de Privacidad</a></p>
     </div>
     <div class="footer-col">
@@ -206,7 +202,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     <a href="https://sophiamx.org/politica-de-privacidad" target="_blank">Política de Privacidad</a>
   </div>
 </footer>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
 const MODULE            = 'Autoconocimiento';
@@ -264,7 +260,7 @@ async function init(){
 $("btn-start").addEventListener("click",()=>{hide("step-greeting");show("step-quiz");renderQuestion();});
 const animIn=()=>{const p=$("panel");p.classList.remove("in");requestAnimationFrame(()=>requestAnimationFrame(()=>p.classList.add("in")));};
 function updateProgress(){$("bar").style.width=Math.round((idx/items.length)*100)+"%";$("qIndex").textContent=`Pregunta ${Math.min(idx+1,items.length)} de ${items.length}`;}
-const LABELS={1:"Mal",2:"Neutro",3:"Bien"};
+
 
 function renderQuestion(){
   const[key,text]=items[idx];
@@ -274,7 +270,7 @@ function renderQuestion(){
   $("nextBtn").style.display=idx<items.length-1?"inline-flex":"none";
   $("submitBtn").style.display=idx===items.length-1?"inline-flex":"none";
   const sel=answers.get(key);
-  $("panel").innerHTML=`<div class="q-title">${text}</div><div class="scale-row" role="radiogroup">${[1,2,3].map(v=>`<label class="scale-opt" data-val="${v}" data-checked="${sel===v}"><input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}/><span class="scale-num">${v}</span><span class="scale-label">${LABELS[v]}</span></label>`).join("")}</div>`;
+  $("panel").innerHTML=`<div class="q-title">${text}</div><div class="scale-row" role="radiogroup">${[1,2,3,4,5].map(v=>`<label class="scale-opt" data-val="${v}" data-checked="${sel===v}"><input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}/><span class="scale-num">${v}</span></label>`).join("")}</div>`;
   animIn();
   $("panel").querySelectorAll(".scale-opt").forEach(el=>{
     el.addEventListener("click",()=>{
@@ -292,7 +288,7 @@ $("nextBtn").addEventListener("click",()=>{if(!answers.get(items[idx][0])){$("va
 $("submitBtn").addEventListener("click",()=>{if(!items.every(([k])=>answers.get(k))){$("validation").textContent="Responde todas las preguntas.";return;}renderResultAndSend();});
 
 function computeTotal(){let s=0;items.forEach(([k])=>{const v=answers.get(k);if(v)s+=v;});return s;}
-function pctFromTotal(t){return Math.max(0,Math.min(100,Math.round(((t-8)/16)*100)));}
+function pctFromTotal(t){return Math.max(0,Math.min(100,Math.round(((t-8)/32)*100)));}
 function bandForPct(p){return p<=45?"Bajo":p<=75?"Medio":"Alto";}
 
 async function saveToAirtable(){
@@ -344,11 +340,4 @@ function renderResultAndSend(){
 /* Arranca: intenta cargar tokens, con timeout de 3s para no quedar colgado */
 Promise.race([
   fetch('/api/config').then(r=>r.ok?r.json():Promise.reject(r.status)),
-  new Promise(resolve=>setTimeout(()=>resolve(null),3000))
-])
-.then(cfg=>{if(cfg){TOKEN_PARTICIPANTES=cfg.tokenParticipantes||'';TOKEN_EVALUACIONES=cfg.tokenEvaluaciones||'';}})
-.catch(e=>console.warn('Config:',e))
-.finally(()=>init());
-</script>
-</body>
-</html>
+  new Promise(r
