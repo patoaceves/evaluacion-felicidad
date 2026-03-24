@@ -337,7 +337,19 @@ function renderResultAndSend(){
   saveToAirtable().then(r=>{$("send-status").innerHTML=r.ok?"\u2705 Guardado":` \u26a0\ufe0f ${r.msg}`;});
 }
 
-/* Arranca: intenta cargar tokens, con timeout de 3s para no quedar colgado */
+/* Carga tokens desde /api/config con timeout de 3s */
 Promise.race([
-  fetch('/api/config').then(r=>r.ok?r.json():Promise.reject(r.status)),
-  new Promise(r
+  fetch('/api/config').then(r => r.ok ? r.json() : Promise.reject(r.status)),
+  new Promise(resolve => setTimeout(() => resolve(null), 3000))
+])
+.then(cfg => {
+  if (cfg) {
+    TOKEN_PARTICIPANTES = cfg.tokenParticipantes || '';
+    TOKEN_EVALUACIONES  = cfg.tokenEvaluaciones  || '';
+  }
+})
+.catch(e => console.warn('Config:', e))
+.finally(() => init());
+</script>
+</body>
+</html>
