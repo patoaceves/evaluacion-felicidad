@@ -309,7 +309,7 @@ async function saveToAirtable(){
     "R7":answers.get(items[6][0])||null,
     "R8":answers.get(items[7][0])||null
   };
-  if(participant.recordId)fields["Participantes"]=[participant.recordId];
+  // No se envía el linked record — Participantes y Sesiones están en bases distintas
   try{
     const res=await fetch(SESIONES_URL,{method:"POST",headers:{"Authorization":`Bearer ${TOKEN_EVALUACIONES}`,"Content-Type":"application/json"},body:JSON.stringify({fields})});
     if(res.ok)return{ok:true};
