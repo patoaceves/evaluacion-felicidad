@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Trabajo con Propósito — Evaluación Sophia</title>
+<link rel="icon" type="image/png" href="/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Poltawski+Nowy:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --red:        #C0112F;
+  --red-dark:   #a00f27;
+  --red-soft:   rgba(192,17,47,.12);
+  --bg:         #FFFCFA;
+  --text:       #1a1a1a;
+  --muted:      #6b7280;
+  --border:     #e5e0db;
+  --ok-bg:      #d1fae5;
+  --ok-text:    #065f46;
+  --err-bg:     #fce4e4;
+  --err-text:   #9b1c1c;
+  --radius:     18px;
+  --shadow:     0 8px 28px rgba(0,0,0,.09);
+  --area:       #82beff;
+}
+html { background: var(--bg); }
+body { display:flex; flex-direction:column; min-height:100vh; font-family:'Karla',sans-serif; font-size:15px; line-height:1.6; color:var(--text); background:var(--bg); }
+#site-header { display:flex; align-items:center; justify-content:space-between; padding:0 48px; height:95px; background:#FFFCFA; position:sticky; top:0; z-index:100; border-bottom:1px solid rgba(0,0,0,.05); }
+#site-header .logo { display:flex; align-items:center; text-decoration:none; }
+#site-header .logo img { height:118px; }
+#site-header nav { display:flex; gap:28px; align-items:center; }
+#site-header nav a { text-decoration:none; font-size:1em; font-weight:400; color:#c0112f; text-transform:uppercase; letter-spacing:.08em; transition:opacity .2s; }
+#site-header nav a:hover { opacity:.65; }
+#site-header .btn-contact { background:#c0112f; color:white; border-radius:8px; padding:11px 22px; font-size:.82em; font-weight:600; text-decoration:none; transition:background .2s; white-space:nowrap; }
+#site-header .btn-contact:hover { background:#a00f27; }
+@media(max-width:960px){ #site-header{padding:0 20px;} #site-header nav{display:none;} }
+.page-center { flex:1; display:flex; align-items:flex-start; justify-content:center; padding:40px 16px 60px; }
+.card { width:100%; max-width:620px; background:#fff; border-radius:var(--radius); padding:36px 36px 32px; box-shadow:var(--shadow); animation:fadeUp .4s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.step { animation:fadeUp .35s ease both; }
+.hidden { display:none !important; }
+h1 { font-family:'Poltawski Nowy',serif; font-size:1.7rem; font-weight:700; line-height:1.2; margin-bottom:6px; }
+.subtitle { color:var(--muted); font-size:14px; margin-bottom:24px; }
+.form-hint { font-size:14px; color:var(--muted); margin-bottom:22px; line-height:1.7; }
+.eyebrow { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#9b1c1c; margin-bottom:8px; }
+.accent-bar { width:3px; height:48px; background:var(--red); border-radius:2px; margin-bottom:18px; }
+.field { margin-bottom:18px; }
+label { display:block; font-size:12px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+input[type="text"] { width:100%; height:46px; border:1.5px solid var(--border); border-radius:10px; background:var(--bg); color:var(--text); font-family:'Karla',sans-serif; font-size:15px; padding:0 14px; transition:border-color .18s,box-shadow .18s,background .18s; appearance:none; }
+input:focus { outline:none; border-color:var(--red); box-shadow:0 0 0 3px var(--red-soft); background:#fff; }
+input::placeholder { color:#b0a9a4; }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:46px; padding:0 24px; background:var(--red); color:#fff; font-family:'Karla',sans-serif; font-size:15px; font-weight:700; border:1.5px solid transparent; border-radius:999px; cursor:pointer; box-shadow:0 4px 16px rgba(192,17,47,.3); transition:opacity .18s,transform .12s,box-shadow .18s; text-decoration:none; white-space:nowrap; }
+.btn:hover:not(:disabled) { opacity:.9; transform:translateY(-1px); box-shadow:0 6px 22px rgba(192,17,47,.4); }
+.btn:active:not(:disabled) { transform:translateY(0); }
+.btn:disabled { opacity:.65; cursor:not-allowed; box-shadow:none; }
+.btn.secondary { background:#fff; color:var(--text); border-color:var(--border); box-shadow:none; }
+.btn.secondary:hover:not(:disabled) { border-color:var(--red); color:var(--red); box-shadow:none; }
+.btn.full { width:100%; margin-top:8px; }
+.spinner { width:16px; height:16px; border:2.5px solid rgba(255,255,255,.35); border-top-color:#fff; border-radius:50%; animation:spin .65s linear infinite; flex-shrink:0; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.alert { border-radius:10px; padding:13px 16px; font-size:14px; line-height:1.6; margin-top:16px; animation:fadeUp .3s ease both; }
+.alert-ok  { background:var(--ok-bg);  color:var(--ok-text);  }
+.alert-err { background:var(--err-bg); color:var(--err-text); }
+.alert strong { font-weight:700; }
+.alert a { color:inherit; }
+.create-link { margin-top:20px; text-align:center; font-size:13px; color:var(--muted); }
+.create-link a { color:var(--red); font-weight:600; text-decoration:none; }
+.create-link a:hover { text-decoration:underline; }
+.greeting-row { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+.avatar { width:52px; height:52px; border-radius:50%; background:var(--area); display:flex; align-items:center; justify-content:center; font-family:'Poltawski Nowy',serif; font-size:1.4rem; font-weight:700; color:#fff; flex-shrink:0; }
+.greeting-name { font-family:'Poltawski Nowy',serif; font-size:1.5rem; font-weight:700; }
+.greeting-id { font-size:12px; color:var(--muted); margin-top:3px; }
+.progress-wrap { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+.progress { flex:1; height:8px; background:#F1F4F8; border-radius:999px; overflow:hidden; border:1px solid #E6EAF0; }
+.progress i { display:block; height:100%; width:0; background:var(--red); transition:width 200ms ease; border-radius:999px; }
+.q-index { font-weight:700; color:#555; min-width:110px; text-align:right; font-size:13px; }
+.stage { min-height:200px; }
+.panel { opacity:0; transform:translateY(5px); transition:opacity 180ms ease,transform 180ms ease; }
+.panel.in { opacity:1; transform:translateY(0); }
+.q-title { font-family:'Poltawski Nowy',serif; font-size:1.05rem; font-weight:700; line-height:1.4; margin-bottom:10px; }
+.hint { font-size:.88rem; color:var(--muted); margin-bottom:14px; }
+.pills { display:flex; gap:10px; flex-wrap:wrap; }
+.pill { position:relative; display:inline-flex; align-items:center; justify-content:center; width:56px; height:50px; border-radius:13px; border:2px solid var(--border); background:#fff; color:#222; font-weight:800; font-size:1.05rem; cursor:pointer; user-select:none; transition:transform 180ms,border 180ms,box-shadow 180ms,background 180ms,color 180ms; }
+.pill:hover { box-shadow:0 4px 14px rgba(0,0,0,.07); transform:translateY(-1px); }
+.pill input { appearance:none; position:absolute; opacity:0; inset:0; cursor:pointer; }
+.pill[data-checked="true"] { background:var(--area); border-color:var(--area); color:#fff; box-shadow:0 0 0 3px rgba(0,0,0,.08); }
+.controls { display:flex; justify-content:space-between; gap:10px; margin-top:20px; }
+.validation { color:var(--red); font-weight:600; margin-top:10px; min-height:1.3em; font-size:13px; }
+.p-bar { display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--bg); border-radius:10px; margin-bottom:20px; border:1px solid var(--border); }
+.p-av { width:38px; height:38px; border-radius:50%; background:var(--area); display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; font-size:1rem; flex-shrink:0; }
+.p-name { font-weight:700; font-size:.95rem; }
+.p-id { font-size:.78rem; color:var(--muted); }
+.result-grid { display:grid; grid-template-columns:220px 1fr; gap:22px; align-items:start; }
+@media(max-width:540px){ .result-grid{grid-template-columns:1fr} }
+.wedge-wrap { position:relative; width:220px; height:220px; }
+.wedge-wrap svg { display:block; width:100%; height:100%; }
+.pct-label { position:absolute; left:0; right:0; top:50%; transform:translateY(-50%); text-align:center; font-size:1.5rem; font-weight:800; color:var(--text); pointer-events:none; }
+.band-tag { font-size:.78rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; display:inline-flex; align-items:center; gap:7px; padding:5px 12px; border-radius:999px; border:1.5px solid currentColor; margin-bottom:8px; }
+.band-dot { width:8px; height:8px; border-radius:50%; background:currentColor; }
+.result-title { font-family:'Poltawski Nowy',serif; font-size:1.15rem; font-weight:700; margin-bottom:8px; }
+.result-lead { color:#333; line-height:1.75; margin-bottom:14px; font-size:.95rem; }
+.steps-label { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:6px; }
+.steps-list { padding-left:18px; margin-bottom:14px; }
+.steps-list li { margin-bottom:6px; line-height:1.7; color:#333; font-size:.92rem; }
+.result-note { font-size:.83rem; color:#999; line-height:1.6; margin-bottom:18px; }
+.send-status { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); margin-top:10px; }
+</style>
+</head>
+<body>
+<header id="site-header">
+  <a class="logo" href="https://sophiamx.org" target="_blank">
+    <img src="https://static.wixstatic.com/media/6bf1ef_d0efb91350e04315be1fe1a9982e69c8~mv2.png" alt="Sophia">
+  </a>
+  <nav>
+    <a href="https://sophiamx.org" target="_blank">Home</a>
+    <a href="https://sophiamx.org/sophia" target="_blank">Sophia</a>
+    <a href="https://sophiamx.org/estudia" target="_blank">Estudia</a>
+    <a href="https://sophiamx.org/coaching" target="_blank">Coaching</a>
+    <a href="https://sophiamx.org/embajadores" target="_blank">Embajadores</a>
+    <a href="https://sophiamx.org/consultoria" target="_blank">Consultoría</a>
+    <a class="btn-contact" href="https://sophiamx.org/contacto" target="_blank">Contáctanos</a>
+  </nav>
+</header>
+<div class="page-center">
+<div class="card">
+  <div id="step-lookup" class="step">
+    <div class="eyebrow">SOPHIA · Evaluación Felicidad</div>
+    <div class="accent-bar"></div>
+    <h1>Trabajo con Propósito</h1>
+    <p class="subtitle">Ingresa tu ID Participante para comenzar.</p>
+    <div class="field">
+      <label for="id-input">ID Participante</label>
+      <input type="text" id="id-input" placeholder="Ej: MAR123456" autocomplete="off" spellcheck="false"/>
+    </div>
+    <button class="btn full" id="btn-buscar" type="button">Buscar</button>
+    <div id="lookup-error" class="alert alert-err hidden"></div>
+    <div class="create-link">
+      ¿No tienes ID aún? <a href="https://participantes.sophiamx.org" target="_blank">Créalo aquí</a>
+    </div>
+  </div>
+  <div id="step-found" class="step hidden">
+    <div class="eyebrow">SOPHIA · Evaluación Felicidad</div>
+    <div class="greeting-row">
+      <div class="avatar" id="greeting-avatar">?</div>
+      <div>
+        <div class="greeting-name">¡Hola, <span id="greeting-name"></span>!</div>
+        <div class="greeting-id" id="greeting-id-txt"></div>
+      </div>
+    </div>
+    <p class="form-hint">Contesta cada ítem con <strong>1</strong> si te va mal en ese aspecto, <strong>2</strong> si te sientes neutro/a, y <strong>3</strong> si te va bien.</p>
+    <button class="btn full" type="button" id="btn-start">Comenzar evaluación →</button>
+  </div>
+  <div id="step-quiz" class="step hidden">
+    <div class="progress-wrap">
+      <div class="progress"><i id="bar"></i></div>
+      <div class="q-index" id="qIndex">Pregunta 1 de 8</div>
+    </div>
+    <div class="stage"><div id="panel" class="panel in"></div></div>
+    <div class="controls">
+      <button id="prevBtn" class="btn secondary" type="button">Anterior</button>
+      <div style="display:flex;gap:10px">
+        <button id="nextBtn" class="btn" type="button">Siguiente</button>
+        <button id="submitBtn" class="btn" type="button" style="display:none">Ver resultado</button>
+      </div>
+    </div>
+    <div id="validation" class="validation"></div>
+  </div>
+  <div id="step-result" class="step hidden"></div>
+</div>
+</div>
+<script>
+// Token para buscar participantes (base de participantes)
+const TOKEN_PARTICIPANTES  = window.__QUERY_ID_PARTICIPANTE__ || '';
+// Token para guardar sesiones (base de evaluaciones)
+const TOKEN_EVALUACIONES   = window.__EVALUACION_FELICIDAD__ || '';
+const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
+const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
+const MODULE            = 'Trabajo con Propósito';
+const AREA_COLOR        = '#82beff';
+
+const items = [["adecuadamente", "¿Mi trabajo está bien hecho?"], ["disfrute", "¿Experimento disfrute en mi trabajo más allá del logro material?"], ["emociones_pos", "¿Me siento en armonía y con perspectiva positiva hacia el futuro en mi trabajo?"], ["compromiso", "¿Desarrollo mis ocupaciones con entrega y dedicación?"], ["logro", "¿Tengo posibilidad de experimentar crecimiento o éxito en lo que hago?"], ["satisfaccion", "¿Existe balance entre lo que quisiera y lo que tengo en mi vida laboral?"], ["sentido", "¿Mis trabajos los hago por o para alguien más allá de mí mismo?"], ["trascendencia", "¿Lo que hago trasciende mi beneficio personal?"]];
+const bandTexts = {"Alto": {"color": "#2E7D32", "lead": "Tu trabajo está conectado con propósito mayor e impacto real. Existe coherencia entre valores, ocupación y sentido de trascendencia. Esa alineación es una fortaleza valiosa.", "steps": ["Protege esta alineación: revisa mensualmente si tus proyectos siguen conectados con tus valores más profundos.", "Convierte tu propósito en impacto concreto: mentoría, servicio o un proyecto que extienda tu alcance más allá de ti."]}, "Medio": {"color": "#C88D2D", "lead": "Cumples y logras, pero el propósito es intermitente o predominantemente externo. Hay base sólida para profundizar la conexión entre trabajo y sentido.", "steps": ["Escribe en dos líneas tu 'para qué' más profundo y revísalo al tomar decisiones laborales esta semana.", "Identifica 1 tarea diaria que haces por alguien más y hazla con esa conciencia explícita."]}, "Bajo": {"color": "#B00020", "lead": "Hay desconexión entre ocupación e identidad o propósito. Riesgo de desgaste por falta de sentido. El punto de partida es reconectar con lo que importa.", "steps": ["Reflexión de valores (10 min): ¿qué 3 cosas harías aunque no te pagaran? ¿cómo se relacionan con lo que haces hoy?", "Un acto de servicio deliberado esta semana: haz algo en tu trabajo exclusivamente por el bien de otra persona."]}, "note": "Nota de rigor: Estos resultados no son diagnósticos. Úsalos como línea base personal y vuelve a medir tras 2–4 semanas de práctica para observar tendencia."};
+
+let participant = { recordId:"", id:"", nombre:"", apellidos:"", email:"" };
+let idx = 0;
+const answers = new Map();
+
+const $    = id => document.getElementById(id);
+const show = id => $(id).classList.remove("hidden");
+const hide = id => $(id).classList.add("hidden");
+
+function setBtn(btn, label, loading) {
+  btn.disabled = loading;
+  btn.innerHTML = loading ? `<span class="spinner"></span>${label}` : label;
+}
+function showErr(id, msg) {
+  const el = $(id);
+  el.innerHTML = `<strong>Error:</strong> ${msg}`;
+  el.classList.remove("hidden");
+}
+function hideErr(id) { $(id).classList.add("hidden"); }
+
+async function buscarID() {
+  const raw = $("id-input").value.trim().toUpperCase();
+  const btn = $("btn-buscar");
+  hideErr("lookup-error");
+  if (!raw) { showErr("lookup-error", "Ingresa tu ID Participante."); $("id-input").focus(); return; }
+  setBtn(btn, "Buscando…", true);
+  try {
+    const formula = encodeURIComponent(`({ID Participante}="${raw}")`);
+    const res = await fetch(`${PARTICIPANTES_URL}?filterByFormula=${formula}`, {
+      headers: { Authorization: `Bearer ${TOKEN_PARTICIPANTES}` }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (data.records && data.records.length > 0) {
+      const rec = data.records[0];
+      const f   = rec.fields || {};
+      participant = {
+        recordId:  rec.id,
+        id:        f["ID Participante"] || raw,
+        nombre:    f["Nombre"]          || "",
+        apellidos: f["Apellidos"]       || "",
+        email:     f["Email"]           || ""
+      };
+      $("greeting-avatar").textContent = (participant.nombre || participant.id).charAt(0).toUpperCase();
+      $("greeting-name").textContent   = participant.nombre || participant.id;
+      $("greeting-id-txt").textContent = `ID: ${participant.id}`;
+      hide("step-lookup"); show("step-found");
+    } else {
+      showErr("lookup-error", `No encontramos el ID <strong>${raw}</strong>. Verifica que sea correcto o <a href="https://participantes.sophiamx.org" target="_blank">crea tu perfil aquí</a>.`);
+    }
+  } catch(e) {
+    showErr("lookup-error", e.message || "No pudimos conectar. Intenta de nuevo.");
+  } finally {
+    setBtn(btn, "Buscar", false);
+  }
+}
+
+$("id-input").addEventListener("keydown", e => { if (e.key === "Enter") buscarID(); });
+$("btn-buscar").addEventListener("click", buscarID);
+$("btn-start").addEventListener("click", startQuiz);
+
+function startQuiz() {
+  idx = 0; answers.clear();
+  hide("step-found"); show("step-quiz");
+  renderQuestion();
+}
+
+const animIn = () => {
+  const p = $("panel");
+  p.classList.remove("in");
+  requestAnimationFrame(() => requestAnimationFrame(() => p.classList.add("in")));
+};
+
+function updateProgress() {
+  $("bar").style.width    = Math.round((idx / items.length) * 100) + "%";
+  $("qIndex").textContent = `Pregunta ${Math.min(idx + 1, items.length)} de ${items.length}`;
+}
+
+function renderQuestion() {
+  const [key, text] = items[idx];
+  updateProgress();
+  $("validation").textContent = "";
+  $("prevBtn").disabled        = idx === 0;
+  $("nextBtn").style.display   = idx < items.length - 1 ? "inline-flex" : "none";
+  $("submitBtn").style.display = idx === items.length - 1 ? "inline-flex" : "none";
+  const sel = answers.get(key);
+  $("panel").innerHTML = `
+    <div class="q-title">${text}</div>
+    <div class="hint">Elige 1 (vas mal), 2 (neutro) o 3 (vas bien).</div>
+    <div class="pills" role="radiogroup">
+      ${[1,2,3].map(v => `
+        <label class="pill" data-val="${v}" data-checked="${sel===v}">
+          <input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}/>
+          <span>${v}</span>
+        </label>`).join("")}
+    </div>`;
+  animIn();
+  $("panel").querySelectorAll(".pill").forEach(el => {
+    el.addEventListener("click", () => {
+      const v = Number(el.getAttribute("data-val"));
+      answers.set(key, v);
+      $("panel").querySelectorAll(".pill").forEach(x => x.setAttribute("data-checked","false"));
+      el.setAttribute("data-checked","true");
+      setTimeout(() => {
+        if (idx < items.length - 1) { idx++; renderQuestion(); }
+        else { $("nextBtn").style.display="none"; $("submitBtn").style.display="inline-flex"; }
+      }, 160);
+    });
+  });
+}
+
+$("prevBtn").addEventListener("click", () => { if (idx > 0) { idx--; renderQuestion(); } });
+$("nextBtn").addEventListener("click", () => {
+  if (!answers.get(items[idx][0])) { $("validation").textContent = "Selecciona una opción para continuar."; return; }
+  if (idx < items.length - 1) { idx++; renderQuestion(); }
+});
+$("submitBtn").addEventListener("click", () => {
+  if (!items.every(([k]) => answers.get(k))) { $("validation").textContent = "Responde todas las preguntas."; return; }
+  renderResultAndSend();
+});
+
+function computeTotal() {
+  let s = 0; items.forEach(([k]) => { const v = answers.get(k); if (v) s += v; }); return s;
+}
+function pctFromTotal(t) { return Math.max(0, Math.min(100, Math.round(((t-8)/16)*100))); }
+function bandForPct(p)   { return p <= 45 ? "Bajo" : p <= 75 ? "Medio" : "Alto"; }
+
+async function saveToAirtable(total, pct, band) {
+  const rFields = {};
+  items.forEach(([key], i) => { rFields[`R${i+1}`] = answers.get(key) || null; });
+  const fields = {
+    "Módulo":          MODULE,
+    "Email":           participant.email,
+    "ID_Participante": participant.id,
+    ...rFields,
+    ...(participant.recordId ? { "Participante": [participant.recordId] } : {})
+  };
+  try {
+    const res = await fetch(SESIONES_URL, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${TOKEN_EVALUACIONES}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ fields })
+    });
+    return res.ok;
+  } catch(e) {
+    console.warn("Error guardando en Airtable:", e);
+    return false;
+  }
+}
+
+function polarToXY(cx, cy, r, deg) {
+  const a = (deg - 90) * Math.PI / 180;
+  return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+}
+function arcPath(cx, cy, r, a0, a1) {
+  const [x0,y0] = polarToXY(cx,cy,r,a0);
+  const [x1,y1] = polarToXY(cx,cy,r,a1);
+  return `M ${x0} ${y0} A ${r} ${r} 0 ${(a1-a0)<=180?0:1} 1 ${x1} ${y1}`;
+}
+function drawWedge(container, pct) {
+  const size=220, cx=size/2, cy=size/2, start=270, end=360;
+  const rings=6, gap=5, thick=13, inner=45;
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns,"svg");
+  svg.setAttribute("viewBox",`0 0 ${size} ${size}`);
+  for (let i=0;i<rings;i++){
+    const r=inner+i*(thick+gap)+thick/2;
+    const p=document.createElementNS(ns,"path");
+    p.setAttribute("d",arcPath(cx,cy,r,start,end));
+    p.setAttribute("fill","none"); p.setAttribute("stroke","rgba(0,0,0,.08)");
+    p.setAttribute("stroke-width",thick); svg.appendChild(p);
+  }
+  for (let i=1;i<rings;i++){
+    const r=inner+i*(thick+gap);
+    const d=document.createElementNS(ns,"path");
+    d.setAttribute("d",arcPath(cx,cy,r,start,end));
+    d.setAttribute("fill","none"); d.setAttribute("stroke","#fff");
+    d.setAttribute("stroke-width","2"); svg.appendChild(d);
+  }
+  const perRing=100/rings, full=Math.floor(pct/perRing), partial=(pct-full*perRing)/perRing;
+  for (let i=0;i<full;i++){
+    const r=inner+i*(thick+gap)+thick/2;
+    const p=document.createElementNS(ns,"path");
+    p.setAttribute("d",arcPath(cx,cy,r,start,end));
+    p.setAttribute("fill","none"); p.setAttribute("stroke",AREA_COLOR);
+    p.setAttribute("stroke-width",thick); svg.appendChild(p);
+  }
+  if (partial > 0 && full < rings){
+    const r=inner+full*(thick+gap)+thick/2;
+    const p=document.createElementNS(ns,"path");
+    p.setAttribute("d",arcPath(cx,cy,r,start,end));
+    p.setAttribute("fill","none"); p.setAttribute("stroke",AREA_COLOR);
+    p.setAttribute("stroke-width",thick); svg.appendChild(p);
+    requestAnimationFrame(()=>{
+      const len=p.getTotalLength();
+      p.setAttribute("stroke-dasharray",`${len*partial} ${len*(1-partial)}`);
+    });
+  }
+  container.innerHTML=""; container.appendChild(svg);
+}
+
+function renderResultAndSend() {
+  const total = computeTotal();
+  const pct   = pctFromTotal(total);
+  const band  = bandForPct(pct);
+  const bt    = bandTexts[band];
+  const ini   = (participant.nombre || participant.id).charAt(0).toUpperCase();
+  $("bar").style.width="100%"; $("qIndex").textContent="Resultado";
+  ["prevBtn","nextBtn","submitBtn"].forEach(id => $(id).style.display="none");
+  hide("step-quiz"); show("step-result");
+  $("step-result").innerHTML = `
+    <div class="p-bar">
+      <div class="p-av">${ini}</div>
+      <div>
+        <div class="p-name">${participant.nombre} ${participant.apellidos}</div>
+        <div class="p-id">ID: ${participant.id}</div>
+      </div>
+    </div>
+    <div class="result-grid">
+      <div>
+        <div class="wedge-wrap">
+          <div id="wedgeMount"></div>
+          <div class="pct-label">${pct}%</div>
+        </div>
+      </div>
+      <div>
+        <div class="band-tag" style="color:${bt.color}">
+          <span class="band-dot"></span>Nivel ${band}
+        </div>
+        <div class="result-title">${MODULE}</div>
+        <p class="result-lead">${bt.lead}</p>
+        <div class="steps-label">Siguiente paso (1–2 semanas)</div>
+        <ul class="steps-list">
+          ${bt.steps.map(s=>`<li>${s}</li>`).join("")}
+        </ul>
+        <p class="result-note">${bandTexts.note}</p>
+        <button class="btn secondary" type="button" onclick="reiniciar()">← Reiniciar</button>
+        <div class="send-status" id="send-status">
+          <span class="spinner" style="border-color:rgba(0,0,0,.15);border-top-color:#888;"></span>
+          Guardando resultados…
+        </div>
+      </div>
+    </div>`;
+  drawWedge($("wedgeMount"), pct);
+  saveToAirtable(total, pct, band).then(ok => {
+    $("send-status").innerHTML = ok ? "✅ Guardado correctamente" : "⚠️ No se pudo guardar. Verifica tu conexión.";
+  });
+}
+
+function reiniciar() {
+  answers.clear(); idx=0;
+  hide("step-result");
+  $("id-input").value="";
+  hideErr("lookup-error");
+  show("step-lookup");
+  $("id-input").focus();
+}
+</script>
+</body>
+</html>
