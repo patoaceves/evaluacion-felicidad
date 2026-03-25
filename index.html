@@ -225,11 +225,14 @@ const hide = id => $(id).classList.add("hidden");
 
 let currentParticipant = null;
 
-// Cargar token desde /api/config al iniciar la página
-fetch('/api/config')
-  .then(r => r.json())
-  .then(cfg => { TOKEN_PARTICIPANTES = cfg.tokenParticipantes || ''; })
-  .catch(e => console.warn('No se pudo cargar config:', e));
+// Cargar token desde /api/config y luego auto-buscar si hay ?id= en URL
+Promise.race([
+  fetch('/api/config').then(r => r.ok ? r.json() : Promise.reject()),
+  new Promise(resolve => setTimeout(() => resolve(null), 3000))
+])
+.then(cfg => { if(cfg) TOKEN_PARTICIPANTES = cfg.tokenParticipantes || ''; })
+.catch(e => console.warn('Config:', e))
+.finally(() => autoLoad());
 
 function setBtn(btn, label, loading) {
   btn.disabled = loading;
@@ -238,7 +241,7 @@ function setBtn(btn, label, loading) {
 
 function showLookupError(msg) {
   const el = $("lookup-error");
-  el.innerHTML = `<strong>Error:</strong> ${msg}`;
+  el.innerHTML = msg;
   el.classList.remove("hidden");
 }
 
@@ -311,13 +314,14 @@ $("id-input").addEventListener("keydown", e => { if (e.key === "Enter") buscarID
 $("btn-buscar").addEventListener("click", buscarID);
 
 // Auto-buscar si viene ?id= en la URL (regreso desde un módulo)
-(function(){
+// Se ejecuta DESPUÉS de que el config cargue el token
+function autoLoad(){
   const idParam = new URLSearchParams(window.location.search).get('id');
   if (idParam) {
     $("id-input").value = idParam.toUpperCase();
     buscarID();
   }
-})();
+}
 </script>
 </body>
 </html>
