@@ -209,7 +209,8 @@ input::placeholder { color:#b0a9a4; }
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tblzva45XMr4vjiuu';
+const PARTICIPANTES_URL  = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz'; // login lookup
+const PARTICIPANTES_HQ   = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tblzva45XMr4vjiuu'; // sesiones linked field
 let TOKEN_PARTICIPANTES = '';
 
 const MODULES = [
@@ -304,7 +305,7 @@ async function showModules() {
   let completedSessions = new Set();
   try {
     const formula = encodeURIComponent(`({ID Participante}="${p.id}")`);
-    const res = await fetch(`${PARTICIPANTES_URL}?filterByFormula=${formula}&fields[]=Sesiones`, {
+    const res = await fetch(`${PARTICIPANTES_HQ}?filterByFormula=${formula}&fields[]=Sesiones`, {
       headers: { Authorization: \`Bearer \${TOKEN_PARTICIPANTES}\` }
     });
     if (res.ok) {
