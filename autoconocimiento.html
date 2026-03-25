@@ -165,6 +165,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     <div id="validation" class="validation"></div>
   </div>
   <div id="step-result" class="step hidden"></div>
+  <div id="step-confirm" class="step hidden"></div>
 </div>
 </div>
 <footer id="site-footer">
@@ -288,19 +289,18 @@ $("nextBtn").addEventListener("click",()=>{if(!answers.get(items[idx][0])){$("va
 $("submitBtn").addEventListener("click",()=>{renderResultAndSend();});
 
 function showConfirm(){
-  // Ocultar barra de progreso y controles
-  $("progress-wrap").style.display="none";
-  $("nextBtn").style.display="none";
-  $("submitBtn").style.display="none";
-  $("prevBtn").style.display="none";
-  $("panel").innerHTML=`
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:24px;text-align:center;">
+  // Esconder todo el step-quiz (barra + pregunta + botones)
+  hide("step-quiz");
+  // Mostrar pantalla de confirmación limpia
+  $("step-confirm").innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 200px);gap:24px;text-align:center;padding:20px;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
         <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png" alt="Autoconocimiento" style="width:64px;height:64px;"/>
         <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#7f94fe;">Autoevaluación</span></div>
       </div>
       <button class="btn" type="button" onclick="renderResultAndSend()" style="padding:0 40px;">Ver mis Resultados</button>
     </div>`;
+  show("step-confirm");
 }
 
 function computeTotal(){let s=0;items.forEach(([k])=>{const v=answers.get(k);if(v)s+=v;});return s;}
