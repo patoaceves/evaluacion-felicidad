@@ -35,7 +35,7 @@ body { display:flex; flex-direction:column; min-height:100vh; font-family:'Karla
 #site-header .btn-contact:hover { background:#a00f27; }
 @media(max-width:960px){ #site-header{padding:0 20px;} #site-header nav{display:none;} }
 
-.page-center { flex:1; display:flex; align-items:flex-start; justify-content:center; padding:48px 16px 60px; }
+.page-center { flex:1; display:flex; align-items:center; justify-content:center; padding:60px 16px; min-height:calc(100vh - 95px); }
 .step { width:100%; animation:fadeUp .4s ease both; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 .hidden { display:none !important; }
@@ -178,7 +178,7 @@ input::placeholder { color:#b0a9a4; }
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <p>+52 81 1988 1581<br><a href="mailto:contacto@sophiamx.org">contacto@sophiamx.org</a></p>
+      <p>+52 81 1988 1581<br><a href="/cdn-cgi/l/email-protection#7e1d11100a1f1d0a113e0d110e16171f130650110c19"><span class="__cf_email__" data-cfemail="4e2d21203a2f2d3a210e3d213e26272f233660213c29">[email&#160;protected]</span></a></p>
       <br>
       <p><a href="https://sophiamx.org/politica-de-privacidad" target="_blank" style="color:#999;font-size:.9em;">Política de Privacidad</a></p>
     </div>
@@ -204,7 +204,7 @@ input::placeholder { color:#b0a9a4; }
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 let TOKEN_PARTICIPANTES = '';
 
@@ -302,13 +302,4 @@ function showModules() {
 function backToLookup() {
   hide("step-modules");
   $("id-input").value = "";
-  $("lookup-error").classList.add("hidden");
-  show("step-lookup");
-  $("id-input").focus();
-}
-
-$("id-input").addEventListener("keydown", e => { if (e.key === "Enter") buscarID(); });
-$("btn-buscar").addEventListener("click", buscarID);
-</script>
-</body>
-</html>
+  $("lookup-erro
