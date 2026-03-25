@@ -267,7 +267,7 @@ async function init(){
 async function fetchAndShowLastResult(){
   try{
     // filterByFormula usa nombre de campo, no field ID
-    const formula=encodeURIComponent(`({id participante txt}="${participant.id}")`);
+    const formula=encodeURIComponent(`({ID Participante (txt)}="${participant.id}")`);
     const res=await fetch(
       `${SESIONES_URL}?filterByFormula=${formula}&sort%5B0%5D%5Bfield%5D=Created&sort%5B0%5D%5Bdirection%5D=desc&maxRecords=1`,
       {headers:{Authorization:`Bearer ${TOKEN_EVALUACIONES}`}}
@@ -277,10 +277,7 @@ async function fetchAndShowLastResult(){
     if(data.records&&data.records.length>0){
       const f=data.records[0].fields||{};
       // R1-R8 come back as field IDs in the response
-      items.forEach(([key],i)=>{
-        const v = f[`R${i+1}`] || f[["fld7TLpf9h1Fs7oIS","fldNyi01ubib1Kh6Q","fldBPejgEoiHe4qKx","fldWnBxOyDVbd3iIf","fldYhpc3DMeXIWdCC","fldtCP2GNIBQuj3fB","fldndDmrLJXXeIQf9","fld42YHrBN4xeRw8t"][i]];
-        if(v) answers.set(key, Number(v));
-      });
+      items.forEach(([key],i)=>{ const v=f[`R${i+1}`]; if(v) answers.set(key,Number(v)); });
       renderResultAndSend(true);
     } else { show("step-greeting"); }
   }catch(e){ console.error("fetchAndShowLastResult error:",e); show("step-greeting"); }
