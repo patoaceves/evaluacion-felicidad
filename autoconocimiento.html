@@ -348,7 +348,7 @@ function renderResultAndSend(){
   const total=computeTotal(),pct=pctFromTotal(total),band=bandForPct(pct),bt=bandTexts[band],ini=(participant.nombre||participant.id).charAt(0).toUpperCase();
   $("bar").style.width="100%";$("qIndex").textContent="Resultado";
   ["prevBtn","nextBtn","submitBtn"].forEach(id=>$(id).style.display="none");
-  hide("step-quiz");show("step-result");
+  hide("step-quiz");hide("step-confirm");show("step-result");
   $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>Nivel ${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1\u20132 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><a class="btn secondary" href="/">\u2190 Volver a m\u00f3dulos</a></div></div>`;
   drawWedge($("wedgeMount"),pct);
   saveToAirtable(); // guarda silenciosamente
