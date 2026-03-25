@@ -32,6 +32,7 @@ body{display:flex;flex-direction:column;min-height:100vh;font-family:'Karla',san
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .step{animation:fadeUp .35s ease both;}
 .hidden{display:none!important;}
+#step-confirm{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 200px);}
 .loading-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 20px;}
 .load-spin{width:40px;height:40px;border:3px solid rgba(127,148,254,.2);border-top-color:var(--area);border-radius:50%;animation:spin .8s linear infinite;}
 .load-text{color:var(--muted);font-size:14px;}
@@ -185,7 +186,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <p>+52 81 1988 1581<br><a href="/cdn-cgi/l/email-protection#dfbcb0b1abbebcabb09facb0afb7b6beb2a7f1b0adb8"><span class="__cf_email__" data-cfemail="7b1814150f1a180f143b08140b13121a16035514091c">[email&#160;protected]</span></a></p>
+      <p>+52 81 1988 1581<br><a href="mailto:contacto@sophiamx.org">contacto@sophiamx.org</a></p>
       <br><p><a href="https://sophiamx.org/politica-de-privacidad" target="_blank" style="color:#999;font-size:.9em;">Política de Privacidad</a></p>
     </div>
     <div class="footer-col">
@@ -203,7 +204,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     <a href="https://sophiamx.org/politica-de-privacidad" target="_blank">Política de Privacidad</a>
   </div>
 </footer>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
 const MODULE            = 'Autoconocimiento';
@@ -293,7 +294,7 @@ function showConfirm(){
   hide("step-quiz");
   // Mostrar pantalla de confirmación limpia
   $("step-confirm").innerHTML = `
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 200px);gap:24px;text-align:center;padding:20px;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;text-align:center;padding:20px;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
         <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png" alt="Autoconocimiento" style="width:64px;height:64px;"/>
         <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#7f94fe;">Autoevaluación</span></div>
