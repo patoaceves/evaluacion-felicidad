@@ -178,7 +178,7 @@ input::placeholder { color:#b0a9a4; }
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <p>+52 81 1988 1581<br><a href="mailto:contacto@sophiamx.org">contacto@sophiamx.org</a></p>
+      <p>+52 81 1988 1581<br><a href="/cdn-cgi/l/email-protection#94f7fbfae0f5f7e0fbd4e7fbe4fcfdf5f9ecbafbe6f3"><span class="__cf_email__" data-cfemail="076468697366647368477468776f6e666a7f29687560">[email&#160;protected]</span></a></p>
       <br>
       <p><a href="https://sophiamx.org/politica-de-privacidad" target="_blank" style="color:#999;font-size:.9em;">Política de Privacidad</a></p>
     </div>
@@ -204,7 +204,7 @@ input::placeholder { color:#b0a9a4; }
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 let TOKEN_PARTICIPANTES = '';
 
@@ -309,6 +309,15 @@ function backToLookup() {
 
 $("id-input").addEventListener("keydown", e => { if (e.key === "Enter") buscarID(); });
 $("btn-buscar").addEventListener("click", buscarID);
+
+// Auto-buscar si viene ?id= en la URL (regreso desde un módulo)
+(function(){
+  const idParam = new URLSearchParams(window.location.search).get('id');
+  if (idParam) {
+    $("id-input").value = idParam.toUpperCase();
+    buscarID();
+  }
+})();
 </script>
 </body>
 </html>
