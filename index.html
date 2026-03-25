@@ -209,9 +209,10 @@ input::placeholder { color:#b0a9a4; }
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const PARTICIPANTES_URL  = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz'; // login lookup
-const PARTICIPANTES_HQ   = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tblzva45XMr4vjiuu'; // sesiones linked field
+const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
+const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
 let TOKEN_PARTICIPANTES = '';
+let TOKEN_EVALUACIONES  = '';
 
 const MODULES = [
   { name:"Autoconocimiento",       slug:"autoconocimiento",      color:"#7f94fe", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png", sessionId:"01. Autoconocimiento" },
@@ -224,7 +225,6 @@ const MODULES = [
   { name:"Fe y Filosofía de Vida", slug:"fe-filosofia",          color:"#e39dff", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c167da426a66ac37b.png", sessionId:"08. Fe y Filosofía de Vida" },
 ];
 
-const SESIONES_URL = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3'; // same base
 
 const $    = id => document.getElementById(id);
 const show = id => $(id).classList.remove("hidden");
@@ -237,7 +237,7 @@ Promise.race([
   fetch('/api/config').then(r => r.ok ? r.json() : Promise.reject()),
   new Promise(resolve => setTimeout(() => resolve(null), 3000))
 ])
-.then(cfg => { if(cfg) TOKEN_PARTICIPANTES = cfg.tokenParticipantes || ''; })
+.then(cfg => { if(cfg) { TOKEN_PARTICIPANTES = cfg.tokenParticipantes || ''; TOKEN_EVALUACIONES = cfg.tokenEvaluaciones || ''; } })
 .catch(e => console.warn('Config:', e))
 .finally(() => autoLoad());
 
@@ -298,34 +298,19 @@ async function showModules() {
   $("g-sub").textContent         = `ID: ${p.id}  ·  Elige el módulo a evaluar`;
   hide("step-lookup");
   show("step-modules");
-  $("modules-grid").innerHTML = `<div style="color:#aaa;font-size:13px;padding:20px;grid-column:1/-1;">Cargando módulos…</div>`;
-
-  // Consultar Participantes para obtener el linked field Sesiones
-  // El campo Sesiones devuelve los IDs de los registros de Sesiones vinculados
+  // Consultar Sesiones (con token de evaluaciones) filtrando por ID Participante
   let completedSessions = new Set();
   try {
     const formula = encodeURIComponent(`({ID Participante}="${p.id}")`);
-    const res = await fetch(`${PARTICIPANTES_HQ}?filterByFormula=${formula}&fields[]=Sesiones`, {
-      headers: { Authorization: \`Bearer \${TOKEN_PARTICIPANTES}\` }
-    });
+    const res = await fetch(
+      `${SESIONES_URL}?filterByFormula=${formula}&fields[]=ID%20Sesi%C3%B3n`,
+      { headers: { Authorization: `Bearer ${TOKEN_EVALUACIONES}` } }
+    );
     if (res.ok) {
       const data = await res.json();
-      if (data.records && data.records.length > 0) {
-        const sessionRecordIds = data.records[0].fields["Sesiones"] || [];
-        // Now fetch each session to get its ID Sesión value
-        if (sessionRecordIds.length > 0) {
-          const sesRes = await fetch(
-            \`\${SESIONES_URL}?filterByFormula=OR(\${sessionRecordIds.map(id=>\`RECORD_ID()='\${id}'\`).join(",")})&fields[]=ID%20Sesi%C3%B3n\`,
-            { headers: { Authorization: \`Bearer \${TOKEN_PARTICIPANTES}\` } }
-          );
-          if (sesRes.ok) {
-            const sesData = await sesRes.json();
-            sesData.records.forEach(r => {
-              if (r.fields["ID Sesión"]) completedSessions.add(r.fields["ID Sesión"]);
-            });
-          }
-        }
-      }
+      data.records.forEach(r => {
+        if (r.fields["ID Sesión"]) completedSessions.add(r.fields["ID Sesión"]);
+      });
     }
   } catch(e) { console.warn("No se pudieron cargar sesiones:", e); }
 
