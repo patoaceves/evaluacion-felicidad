@@ -138,7 +138,13 @@ input::placeholder { color:#b0a9a4; }
 <div class="page-center">
 
   <!-- STEP 1: Lookup -->
-  <div id="step-lookup" class="step">
+  <div id="state-loading" class="step">
+    <div class="lookup-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 20px;">
+      <div style="width:40px;height:40px;border:3px solid rgba(127,148,254,.2);border-top-color:#7f94fe;border-radius:50%;animation:spin .8s linear infinite;"></div>
+      <div style="color:var(--muted);font-size:14px;">Cargando tu perfil…</div>
+    </div>
+  </div>
+  <div id="step-lookup" class="step hidden">
     <div class="lookup-card">
       <div class="eyebrow">AUTOEVALUACIÓN · HAPPINESS WORKSHOP</div>
       <div class="accent-bar"></div>
@@ -289,7 +295,8 @@ async function buscarID() {
       };
       showModules();
     } else {
-      showLookupError(`El ID <strong>${raw}</strong> no existe. Verifica que sea correcto o <a href="https://participantes.sophiamx.org" target="_blank">encuéntralo aquí</a>.`);
+      hide("state-loading"); show("step-lookup");
+    showLookupError(`El ID <strong>${raw}</strong> no existe. Verifica que sea correcto o <a href="https://participantes.sophiamx.org" target="_blank">encuéntralo aquí</a>.`);
     }
   } catch(e) {
     showLookupError(e.message || "No pudimos conectar. Intenta de nuevo.");
@@ -306,6 +313,7 @@ async function showModules() {
   $("g-name").textContent        = p.nombre || p.id;
   $("g-sub").textContent         = `ID: ${p.id}  ·  Elige el módulo a evaluar`;
   hide("step-lookup");
+  hide("state-loading");
   show("step-modules");
   // Consultar Sesiones (con token de evaluaciones) filtrando por ID Participante
   let completedSessions = new Set();
@@ -338,7 +346,7 @@ async function showModules() {
             <div class="mod-name">${m.name}</div>
             <div class="mod-check" style="color:${m.color}">✓ Completado</div>
             <div class="mod-hover-overlay">
-              <a class="mod-hover-btn primary" href="/${m.slug}?id=${encodeURIComponent(p.id)}">Ver mis Resultados</a>
+              <a class="mod-hover-btn primary" href="/${m.slug}?id=${encodeURIComponent(p.id)}&ver=1" style="background:${m.color};">Ver mis Resultados</a>
               <a class="mod-hover-btn secondary" href="/${m.slug}?id=${encodeURIComponent(p.id)}">Contestar de Nuevo</a>
             </div>
           </div>`;
@@ -384,8 +392,14 @@ $("btn-buscar").addEventListener("click", buscarID);
 function autoLoad(){
   const idParam = new URLSearchParams(window.location.search).get('id');
   if (idParam) {
+    // Show loading, hide login
+    hide("step-lookup");
+    show("state-loading");
     $("id-input").value = idParam.toUpperCase();
     buscarID();
+  } else {
+    hide("state-loading");
+    show("step-lookup");
   }
 }
 </script>
