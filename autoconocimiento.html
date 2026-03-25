@@ -150,7 +150,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     <button class="btn full" type="button" id="btn-start">Comenzar evaluación →</button>
   </div>
   <div id="step-quiz" class="step hidden">
-    <div class="progress-wrap">
+    <div class="progress-wrap" id="progress-wrap">
       <div class="progress"><i id="bar"></i></div>
       <div class="q-index" id="qIndex">Pregunta 1 de 8</div>
     </div>
@@ -289,12 +289,12 @@ $("submitBtn").addEventListener("click",()=>{renderResultAndSend();});
 
 function showConfirm(){
   // Ocultar barra de progreso y controles
-  document.querySelector(".progress-wrap").style.display="none";
+  $("progress-wrap").style.display="none";
   $("nextBtn").style.display="none";
   $("submitBtn").style.display="none";
   $("prevBtn").style.display="none";
   $("panel").innerHTML=`
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:24px;min-height:calc(100vh - 250px);text-align:center;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:24px;text-align:center;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
         <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png" alt="Autoconocimiento" style="width:64px;height:64px;"/>
         <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#7f94fe;">Autoevaluación</span></div>
