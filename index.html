@@ -79,6 +79,13 @@ input::placeholder { color:#b0a9a4; }
 .mod-done { border-color:var(--mod-color); background:color-mix(in srgb, var(--mod-color) 5%, white); }
 .mod-check { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
 .mod-lock { font-size:1rem; opacity:.5; }
+.mod-card { position:relative; overflow:hidden; }
+.mod-hover-overlay { position:absolute; inset:0; background:rgba(255,255,255,.96); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; opacity:0; transition:opacity .2s; padding:12px; border-radius:inherit; }
+.mod-card.mod-done:hover .mod-hover-overlay { opacity:1; }
+.mod-hover-btn { display:inline-flex; align-items:center; justify-content:center; width:100%; height:34px; border-radius:999px; font-family:'Karla',sans-serif; font-size:.78rem; font-weight:700; text-decoration:none; cursor:pointer; border:none; transition:opacity .15s; }
+.mod-hover-btn.primary { background:var(--red); color:#fff; }
+.mod-hover-btn.secondary { background:transparent; color:var(--text); border:1.5px solid var(--border); }
+.mod-hover-btn:hover { opacity:.85; }
 @keyframes modIn { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 .mod-card { animation: modIn .4s ease both; }
 .mod-icon { width:56px; height:56px; flex-shrink:0; }
@@ -324,11 +331,23 @@ async function showModules() {
     const unlocked = i === 0 || completedSessions.has(MODULES[i-1].sessionId);
     const delay    = `animation-delay:${i * 80}ms`;
     if (unlocked) {
+      if (done) {
+        return `
+          <div class="mod-card mod-done" style="--mod-color:${m.color};${delay}">
+            <img class="mod-icon" src="${m.icon}" alt="${m.name}" loading="lazy"/>
+            <div class="mod-name">${m.name}</div>
+            <div class="mod-check" style="color:${m.color}">✓ Completado</div>
+            <div class="mod-hover-overlay">
+              <a class="mod-hover-btn primary" href="/${m.slug}?id=${encodeURIComponent(p.id)}">Ver mis Resultados</a>
+              <a class="mod-hover-btn secondary" href="/${m.slug}?id=${encodeURIComponent(p.id)}">Contestar de Nuevo</a>
+            </div>
+          </div>`;
+      }
       return `
-        <a class="mod-card ${done ? 'mod-done' : ''}" href="/${m.slug}?id=${encodeURIComponent(p.id)}" style="--mod-color:${m.color};${delay}">
+        <a class="mod-card" href="/${m.slug}?id=${encodeURIComponent(p.id)}" style="--mod-color:${m.color};${delay}">
           <img class="mod-icon" src="${m.icon}" alt="${m.name}" loading="lazy"/>
           <div class="mod-name">${m.name}</div>
-          ${done ? `<div class="mod-check" style="color:${m.color}">✓ Completado</div>` : `<div class="mod-dot"></div>`}
+          <div class="mod-dot"></div>
         </a>`;
     } else {
       return `
