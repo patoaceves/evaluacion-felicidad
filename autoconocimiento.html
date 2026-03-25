@@ -311,18 +311,18 @@ function bandForPct(p){return p<=45?"Bajo":p<=75?"Medio":"Alto";}
 async function saveToAirtable(){
   if(!TOKEN_EVALUACIONES)return{ok:false,msg:"Falta EVALUACION_FELICIDAD en Vercel."};
   const fields={
-    "M\u00f3dulo":MODULE,
-    "ID Sesi\u00f3n":"01. Autoconocimiento",
-    "ID Participante":participant.id,
-    "Email":participant.email,
-    "R1":answers.get(items[0][0])||null,
-    "R2":answers.get(items[1][0])||null,
-    "R3":answers.get(items[2][0])||null,
-    "R4":answers.get(items[3][0])||null,
-    "R5":answers.get(items[4][0])||null,
-    "R6":answers.get(items[5][0])||null,
-    "R7":answers.get(items[6][0])||null,
-    "R8":answers.get(items[7][0])||null
+    "fldC7F9TD6KaZYJhl": MODULE,
+    "fld0s34qpEzzoq4u4": "01. Autoconocimiento",
+    "fldRjcAjHe0fAixiA": participant.id,
+    "fldNQEhB4NUOXUAQY": participant.email,
+    "fld7TLpf9h1Fs7oIS": answers.get(items[0][0])||null,
+    "fldNyi01ubib1Kh6Q": answers.get(items[1][0])||null,
+    "fldBPejgEoiHe4qKx": answers.get(items[2][0])||null,
+    "fldWnBxOyDVbd3iIf": answers.get(items[3][0])||null,
+    "fldYhpc3DMeXIWdCC": answers.get(items[4][0])||null,
+    "fldtCP2GNIBQuj3fB": answers.get(items[5][0])||null,
+    "fldndDmrLJXXeIQf9": answers.get(items[6][0])||null,
+    "fld42YHrBN4xeRw8t": answers.get(items[7][0])||null
   };
   // No se envía el linked record — Participantes y Sesiones están en bases distintas
   try{
