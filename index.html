@@ -133,7 +133,7 @@ input::placeholder { color:#b0a9a4; }
       <p class="subtitle">Ingresa tu ID Participante para ver los módulos disponibles y continuar con tu evaluación.</p>
       <div class="field">
         <label class="field-label" for="id-input">ID Participante</label>
-        <input type="text" id="id-input" placeholder="Ej: MAR123456" autocomplete="off" spellcheck="false"/>
+        <input type="text" id="id-input" placeholder="Ej: MAR123456" autocomplete="off" spellcheck="false" maxlength="9" style="text-transform:uppercase;"/>
       </div>
       <button class="btn full" id="btn-buscar" type="button">Ingresar</button>
       <div id="lookup-error" class="alert-err hidden" style="margin-top:16px;"></div>
@@ -273,7 +273,7 @@ async function buscarID() {
       };
       showModules();
     } else {
-      showLookupError(`No encontramos el ID <strong>${raw}</strong>. Verifica que sea correcto o <a href="https://participantes.sophiamx.org" target="_blank">encuéntralo aquí</a>.`);
+      showLookupError(`No existe el ID <strong>${raw}</strong>. Verifica que sea correcto o <a href="https://participantes.sophiamx.org" target="_blank">encuéntralo aquí</a>.`);
     }
   } catch(e) {
     showLookupError(e.message || "No pudimos conectar. Intenta de nuevo.");
@@ -311,6 +311,14 @@ function backToLookup() {
 }
 
 $("id-input").addEventListener("keydown", e => { if (e.key === "Enter") buscarID(); });
+$("id-input").addEventListener("input", function() {
+  // Allow only letters for first 3 chars, digits for last 6
+  let val = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (val.length > 3) {
+    val = val.slice(0,3).replace(/[^A-Z]/g,"") + val.slice(3).replace(/[^0-9]/g,"");
+  }
+  this.value = val.slice(0,9);
+});
 $("btn-buscar").addEventListener("click", buscarID);
 
 // Auto-buscar si viene ?id= en la URL (regreso desde un módulo)
