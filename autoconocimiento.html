@@ -289,7 +289,7 @@ $("submitBtn").addEventListener("click",()=>{renderResultAndSend();});
 
 function showConfirm(){
   // Ocultar barra de progreso y controles
-  $("progress-wrap") && (document.querySelector(".progress-wrap").style.display="none");
+  document.querySelector(".progress-wrap").style.display="none";
   $("nextBtn").style.display="none";
   $("submitBtn").style.display="none";
   $("prevBtn").style.display="none";
