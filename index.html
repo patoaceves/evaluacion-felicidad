@@ -347,7 +347,7 @@ async function showModules() {
             <div class="mod-check" style="color:${m.color}">✓ Completado</div>
             <div class="mod-hover-overlay">
               <a class="mod-hover-btn primary" href="/${m.slug}?id=${encodeURIComponent(p.id)}&ver=1" style="background:${m.color};">Ver mis Resultados</a>
-              <a class="mod-hover-btn secondary" href="/${m.slug}?id=${encodeURIComponent(p.id)}">Contestar de Nuevo</a>
+              <a class="mod-hover-btn secondary" href="/${m.slug}?id=${encodeURIComponent(p.id)}&nuevo=1">Contestar de Nuevo</a>
             </div>
           </div>`;
       }
