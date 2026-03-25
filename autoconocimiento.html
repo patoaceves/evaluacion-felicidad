@@ -294,10 +294,12 @@ function showConfirm(){
   $("submitBtn").style.display="none";
   $("prevBtn").style.display="none";
   $("panel").innerHTML=`
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px 24px;gap:32px;min-height:0;text-align:center;">
-      <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png" alt="Autoconocimiento" style="width:64px;height:64px;"/>
-      <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#7f94fe;">Autoevaluación</span></div>
-      <button class="btn" type="button" onclick="renderResultAndSend()" style="padding:0 40px;">Ver mis Resultados</button>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px 8px;gap:24px;min-height:0;text-align:center;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png" alt="Autoconocimiento" style="width:64px;height:64px;"/>
+        <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#7f94fe;">Autoevaluación</span></div>
+      </div>
+      <button class="btn" type="button" onclick="renderResultAndSend()" style="padding:0 40px;margin-bottom:8px;">Ver mis Resultados</button>
     </div>`;
 }
 
