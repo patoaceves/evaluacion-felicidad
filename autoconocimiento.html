@@ -205,7 +205,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
   </div>
 </footer>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
+const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tblzva45XMr4vjiuu';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
 const MODULE            = 'Autoconocimiento';
 const AREA_COLOR        = '#7f94fe';
@@ -312,6 +312,8 @@ async function saveToAirtable(){
   if(!TOKEN_EVALUACIONES)return{ok:false,msg:"Falta EVALUACION_FELICIDAD en Vercel."};
   const fields={
     "M\u00f3dulo":MODULE,
+    "ID Ses\u00edn":"01. Autoconocimiento",
+    "ID Participante":participant.id,
     "Email":participant.email,
     "R1":answers.get(items[0][0])||null,
     "R2":answers.get(items[1][0])||null,
