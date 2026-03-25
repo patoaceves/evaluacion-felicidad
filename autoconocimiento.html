@@ -148,8 +148,10 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     </div>
     <h1>Autoconocimiento</h1>
     <p class="form-hint">Responde cada pregunta en una escala del <strong>1</strong> al <strong>5</strong>, donde 1 es muy mal y 5 es muy bien.</p>
-    <button class="btn full" type="button" id="btn-start">Comenzar evaluación →</button>
-    <button class="btn secondary full" type="button" style="margin-top:10px;" onclick="window.location.href='/?id='+encodeURIComponent(participant.id)">← Regresar a módulos</button>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn secondary" type="button" style="white-space:nowrap;padding:0 18px;flex-shrink:0;" onclick="window.location.href='/?id='+encodeURIComponent(participant.id)">← Regresar</button>
+      <button class="btn" type="button" id="btn-start" style="flex:1;">Comenzar evaluación →</button>
+    </div>
   </div>
   <div id="step-quiz" class="step hidden">
     <div class="progress-wrap" id="progress-wrap">
@@ -313,7 +315,7 @@ async function saveToAirtable(){
   if(!TOKEN_EVALUACIONES)return{ok:false,msg:"Falta EVALUACION_FELICIDAD en Vercel."};
   const fields={
     "fldC7F9TD6KaZYJhl": MODULE,
-    "fld0s34qpEzzoq4u4": "01. Autoconocimiento",
+    "fld0s34qpEzzoq4u4": `${participant.id}-01-${Date.now()}`,
     "fldRjcAjHe0fAixiA": participant.id,
     "fldNQEhB4NUOXUAQY": participant.email,
     "fld7TLpf9h1Fs7oIS": answers.get(items[0][0])||null,
