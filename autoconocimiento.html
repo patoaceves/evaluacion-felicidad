@@ -27,7 +27,7 @@ body{display:flex;flex-direction:column;min-height:100vh;font-family:'Karla',san
 #site-header .btn-contact{background:#c0112f;color:white;border-radius:8px;padding:11px 22px;font-size:.82em;font-weight:600;text-decoration:none;transition:background .2s;white-space:nowrap;}
 #site-header .btn-contact:hover{background:#a00f27;}
 @media(max-width:960px){#site-header{padding:0 20px;}#site-header nav{display:none;}}
-.page-center{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px 60px;}
+.page-center{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 16px;min-height:calc(100vh - 95px);}
 .card{width:100%;max-width:620px;background:#fff;border-radius:var(--radius);padding:36px 36px 32px;box-shadow:var(--shadow);animation:fadeUp .4s ease both;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .step{animation:fadeUp .35s ease both;}
@@ -184,7 +184,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <p>+52 81 1988 1581<br><a href="mailto:contacto@sophiamx.org">contacto@sophiamx.org</a></p>
+      <p>+52 81 1988 1581<br><a href="/cdn-cgi/l/email-protection#dfbcb0b1abbebcabb09facb0afb7b6beb2a7f1b0adb8"><span class="__cf_email__" data-cfemail="7b1814150f1a180f143b08140b13121a16035514091c">[email&#160;protected]</span></a></p>
       <br><p><a href="https://sophiamx.org/politica-de-privacidad" target="_blank" style="color:#999;font-size:.9em;">Política de Privacidad</a></p>
     </div>
     <div class="footer-col">
@@ -202,7 +202,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     <a href="https://sophiamx.org/politica-de-privacidad" target="_blank">Política de Privacidad</a>
   </div>
 </footer>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
 const MODULE            = 'Autoconocimiento';
@@ -294,7 +294,7 @@ function showConfirm(){
   $("submitBtn").style.display="none";
   $("prevBtn").style.display="none";
   $("panel").innerHTML=`
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;gap:28px;min-height:200px;text-align:center;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:40px;min-height:200px;text-align:center;">
       <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png" alt="Autoconocimiento" style="width:64px;height:64px;"/>
       <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#7f94fe;">Autoevaluación</span></div>
       <button class="btn" type="button" onclick="renderResultAndSend()" style="padding:0 40px;">Ver mis Resultados</button>
@@ -354,16 +354,4 @@ function renderResultAndSend(){
 /* Carga tokens desde /api/config con timeout de 3s */
 Promise.race([
   fetch('/api/config').then(r => r.ok ? r.json() : Promise.reject(r.status)),
-  new Promise(resolve => setTimeout(() => resolve(null), 3000))
-])
-.then(cfg => {
-  if (cfg) {
-    TOKEN_PARTICIPANTES = cfg.tokenParticipantes || '';
-    TOKEN_EVALUACIONES  = cfg.tokenEvaluaciones  || '';
-  }
-})
-.catch(e => console.warn('Config:', e))
-.finally(() => init());
-</script>
-</body>
-</html>
+  new Promise(resolve => setTimeout(() => resolve(null),
