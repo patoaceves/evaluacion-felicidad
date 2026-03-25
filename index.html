@@ -230,14 +230,14 @@ let TOKEN_PARTICIPANTES = '';
 let TOKEN_EVALUACIONES  = '';
 
 const MODULES = [
-  { name:"Autoconocimiento",       slug:"autoconocimiento",      color:"#7f94fe", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png", sessionId:"01. Autoconocimiento" },
-  { name:"Bienestar Emocional",    slug:"bienestar-emocional",   color:"#ffcb3c", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c95735c36dbfbbfe7.png", sessionId:"02. Bienestar Emocional" },
-  { name:"Bienestar Físico",       slug:"bienestar-fisico",      color:"#ff9e3c", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd81fc129b408.png", sessionId:"03. Bienestar Físico" },
-  { name:"Presencia Consciente",   slug:"presencia-consciente",  color:"#9ac48e", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd8640a29b409.png", sessionId:"04. Presencia Consciente" },
-  { name:"Vínculos Vitales",       slug:"vinculos-vitales",      color:"#ffae9e", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c95735c6741fbbfe6.png", sessionId:"05. Vínculos Vitales" },
-  { name:"Trabajo con Propósito",  slug:"trabajo-proposito",     color:"#82beff", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c753f1555552a60ab.png", sessionId:"06. Trabajo con Propósito" },
-  { name:"Estética Existencial",   slug:"estetica-existencial",  color:"#fd7c65", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a77eaf08dbe3.png", sessionId:"07. Estética Existencial" },
-  { name:"Fe y Filosofía de Vida", slug:"fe-filosofia",          color:"#e39dff", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c167da426a66ac37b.png", sessionId:"08. Fe y Filosofía de Vida" },
+  { name:"Autoconocimiento",       slug:"autoconocimiento",      color:"#7f94fe", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png", sessionId:"Autoconocimiento" },
+  { name:"Bienestar Emocional",    slug:"bienestar-emocional",   color:"#ffcb3c", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c95735c36dbfbbfe7.png", sessionId:"Bienestar Emocional" },
+  { name:"Bienestar Físico",       slug:"bienestar-fisico",      color:"#ff9e3c", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd81fc129b408.png", sessionId:"Bienestar Físico" },
+  { name:"Presencia Consciente",   slug:"presencia-consciente",  color:"#9ac48e", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd8640a29b409.png", sessionId:"Presencia Consciente" },
+  { name:"Vínculos Vitales",       slug:"vinculos-vitales",      color:"#ffae9e", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c95735c6741fbbfe6.png", sessionId:"Vínculos Vitales" },
+  { name:"Trabajo con Propósito",  slug:"trabajo-proposito",     color:"#82beff", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c753f1555552a60ab.png", sessionId:"Trabajo con Propósito" },
+  { name:"Estética Existencial",   slug:"estetica-existencial",  color:"#fd7c65", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a77eaf08dbe3.png", sessionId:"Estética Existencial" },
+  { name:"Fe y Filosofía de Vida", slug:"fe-filosofia",          color:"#e39dff", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c167da426a66ac37b.png", sessionId:"Fe y Filosofía de Vida" },
 ];
 
 
@@ -315,21 +315,27 @@ async function showModules() {
   hide("step-lookup");
   hide("state-loading");
   show("step-modules");
-  // Consultar Sesiones (con token de evaluaciones) filtrando por ID Participante
+  // Consultar Sesiones filtrando por id participante txt
   let completedSessions = new Set();
   try {
-    const formula = encodeURIComponent(`({ID Participante}="${p.id}")`);
+    const formula = encodeURIComponent(`({ID Participante (txt)}="${p.id}")`);
     const res = await fetch(
-      `${SESIONES_URL}?filterByFormula=${formula}&fields[]=ID%20Sesi%C3%B3n`,
+      `${SESIONES_URL}?filterByFormula=${formula}`,
       { headers: { Authorization: `Bearer ${TOKEN_EVALUACIONES}` } }
     );
     if (res.ok) {
       const data = await res.json();
       data.records.forEach(r => {
-        if (r.fields["ID Sesión"]) completedSessions.add(r.fields["ID Sesión"]);
+        // Primary field = "ID Sesión", also check Módulo as fallback
+        const modulo = r.fields["Módulo"];
+        if (modulo) completedSessions.add(modulo);
       });
+    } else {
+      const e = await res.json().catch(()=>({}));
+      console.error("Error sesiones:", e);
     }
   } catch(e) { console.warn("No se pudieron cargar sesiones:", e); }
+
 
   // Render modules with lock logic:
   // Module 0 (Autoconocimiento) always unlocked
