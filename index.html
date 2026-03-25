@@ -79,6 +79,8 @@ input::placeholder { color:#b0a9a4; }
 .mod-done { border-color:var(--mod-color); background:color-mix(in srgb, var(--mod-color) 5%, white); }
 .mod-check { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
 .mod-lock { font-size:1rem; opacity:.5; }
+@keyframes modIn { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.mod-card { animation: modIn .4s ease both; }
 .mod-icon { width:56px; height:56px; flex-shrink:0; }
 .mod-name { font-family:'Poltawski Nowy',serif; font-size:.92rem; font-weight:700; line-height:1.3; }
 .mod-dot { width:8px; height:8px; border-radius:50%; background:var(--mod-color); margin-top:2px; }
@@ -157,7 +159,7 @@ input::placeholder { color:#b0a9a4; }
           <div class="g-sub" id="g-sub"></div>
         </div>
       </div>
-      <div class="section-label">Elige el módulo a evaluar</div>
+      
       <div class="modules-grid" id="modules-grid"></div>
       <button class="back-link" onclick="backToLookup()">← Salir de Mi Perfil</button>
     </div>
@@ -320,16 +322,17 @@ async function showModules() {
   $("modules-grid").innerHTML = MODULES.map((m, i) => {
     const done     = completedSessions.has(m.sessionId);
     const unlocked = i === 0 || completedSessions.has(MODULES[i-1].sessionId);
+    const delay    = `animation-delay:${i * 80}ms`;
     if (unlocked) {
       return `
-        <a class="mod-card ${done ? 'mod-done' : ''}" href="/${m.slug}?id=${encodeURIComponent(p.id)}" style="--mod-color:${m.color}">
+        <a class="mod-card ${done ? 'mod-done' : ''}" href="/${m.slug}?id=${encodeURIComponent(p.id)}" style="--mod-color:${m.color};${delay}">
           <img class="mod-icon" src="${m.icon}" alt="${m.name}" loading="lazy"/>
           <div class="mod-name">${m.name}</div>
           ${done ? `<div class="mod-check" style="color:${m.color}">✓ Completado</div>` : `<div class="mod-dot"></div>`}
         </a>`;
     } else {
       return `
-        <div class="mod-card mod-locked" style="--mod-color:#ccc" title="Completa los módulos anteriores para acceder">
+        <div class="mod-card mod-locked" style="--mod-color:#ccc;${delay}" title="Completa los módulos anteriores para acceder">
           <img class="mod-icon" src="${m.icon}" alt="${m.name}" loading="lazy" style="filter:grayscale(1);opacity:.4;"/>
           <div class="mod-name" style="color:#bbb;">${m.name}</div>
           <svg class="mod-lock" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
