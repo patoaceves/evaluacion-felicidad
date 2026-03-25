@@ -73,8 +73,12 @@ input::placeholder { color:#b0a9a4; }
 .modules-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
 @media(max-width:720px){ .modules-grid{grid-template-columns:repeat(2,1fr);} }
 @media(max-width:420px){ .modules-grid{grid-template-columns:1fr;} }
-.mod-card { display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; padding:22px 14px 18px; background:#fff; border-radius:16px; text-decoration:none; color:var(--text); border:2px solid transparent; box-shadow:0 2px 10px rgba(0,0,0,.07); transition:transform .2s, box-shadow .2s, border-color .2s; }
-.mod-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.12); border-color:var(--mod-color); }
+.mod-card { display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; padding:22px 14px 18px; background:#fff; border-radius:16px; text-decoration:none; color:var(--text); border:2px solid transparent; box-shadow:0 2px 10px rgba(0,0,0,.07); transition:transform .2s, box-shadow .2s, border-color .2s; cursor:pointer; }
+.mod-card:not(.mod-locked):hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.12); border-color:var(--mod-color); }
+.mod-locked { background:#f9f9f9; cursor:not-allowed; }
+.mod-done { border-color:var(--mod-color); background:color-mix(in srgb, var(--mod-color) 5%, white); }
+.mod-check { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+.mod-lock { font-size:1rem; opacity:.5; }
 .mod-icon { width:56px; height:56px; flex-shrink:0; }
 .mod-name { font-family:'Poltawski Nowy',serif; font-size:.92rem; font-weight:700; line-height:1.3; }
 .mod-dot { width:8px; height:8px; border-radius:50%; background:var(--mod-color); margin-top:2px; }
@@ -205,19 +209,21 @@ input::placeholder { color:#b0a9a4; }
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
+const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tblzva45XMr4vjiuu';
 let TOKEN_PARTICIPANTES = '';
 
 const MODULES = [
-  { name:"Autoconocimiento",       slug:"autoconocimiento",      color:"#7f94fe", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png" },
-  { name:"Bienestar Emocional",    slug:"bienestar-emocional",   color:"#ffcb3c", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c95735c36dbfbbfe7.png" },
-  { name:"Bienestar Físico",       slug:"bienestar-fisico",      color:"#ff9e3c", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd81fc129b408.png" },
-  { name:"Presencia Consciente",   slug:"presencia-consciente",  color:"#9ac48e", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd8640a29b409.png" },
-  { name:"Vínculos Vitales",       slug:"vinculos-vitales",      color:"#ffae9e", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c95735c6741fbbfe6.png" },
-  { name:"Trabajo con Propósito",  slug:"trabajo-proposito",     color:"#82beff", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c753f1555552a60ab.png" },
-  { name:"Estética Existencial",   slug:"estetica-existencial",  color:"#fd7c65", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a77eaf08dbe3.png" },
-  { name:"Fe y Filosofía de Vida", slug:"fe-filosofia",          color:"#e39dff", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c167da426a66ac37b.png" },
+  { name:"Autoconocimiento",       slug:"autoconocimiento",      color:"#7f94fe", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png", sessionId:"01. Autoconocimiento" },
+  { name:"Bienestar Emocional",    slug:"bienestar-emocional",   color:"#ffcb3c", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c95735c36dbfbbfe7.png", sessionId:"02. Bienestar Emocional" },
+  { name:"Bienestar Físico",       slug:"bienestar-fisico",      color:"#ff9e3c", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd81fc129b408.png", sessionId:"03. Bienestar Físico" },
+  { name:"Presencia Consciente",   slug:"presencia-consciente",  color:"#9ac48e", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd8640a29b409.png", sessionId:"04. Presencia Consciente" },
+  { name:"Vínculos Vitales",       slug:"vinculos-vitales",      color:"#ffae9e", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c95735c6741fbbfe6.png", sessionId:"05. Vínculos Vitales" },
+  { name:"Trabajo con Propósito",  slug:"trabajo-proposito",     color:"#82beff", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c753f1555552a60ab.png", sessionId:"06. Trabajo con Propósito" },
+  { name:"Estética Existencial",   slug:"estetica-existencial",  color:"#fd7c65", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a77eaf08dbe3.png", sessionId:"07. Estética Existencial" },
+  { name:"Fe y Filosofía de Vida", slug:"fe-filosofia",          color:"#e39dff", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c167da426a66ac37b.png", sessionId:"08. Fe y Filosofía de Vida" },
 ];
+
+const SESIONES_URL = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3'; // same base
 
 const $    = id => document.getElementById(id);
 const show = id => $(id).classList.remove("hidden");
@@ -282,24 +288,68 @@ async function buscarID() {
   }
 }
 
-function showModules() {
+async function showModules() {
   const p = currentParticipant;
   const ini = (p.nombre || p.id).charAt(0).toUpperCase();
   $("g-avatar").textContent      = ini;
   $("g-avatar").style.background = "#7f94fe";
   $("g-name").textContent        = p.nombre || p.id;
   $("g-sub").textContent         = `ID: ${p.id}  ·  Elige el módulo a evaluar`;
-
-  $("modules-grid").innerHTML = MODULES.map(m => `
-    <a class="mod-card" href="/${m.slug}?id=${encodeURIComponent(p.id)}" style="--mod-color:${m.color}">
-      <img class="mod-icon" src="${m.icon}" alt="${m.name}" loading="lazy"/>
-      <div class="mod-name">${m.name}</div>
-      <div class="mod-dot"></div>
-    </a>
-  `).join("");
-
   hide("step-lookup");
   show("step-modules");
+  $("modules-grid").innerHTML = `<div style="color:#aaa;font-size:13px;padding:20px;grid-column:1/-1;">Cargando módulos…</div>`;
+
+  // Consultar Participantes para obtener el linked field Sesiones
+  // El campo Sesiones devuelve los IDs de los registros de Sesiones vinculados
+  let completedSessions = new Set();
+  try {
+    const formula = encodeURIComponent(`({ID Participante}="${p.id}")`);
+    const res = await fetch(`${PARTICIPANTES_URL}?filterByFormula=${formula}&fields[]=Sesiones`, {
+      headers: { Authorization: \`Bearer \${TOKEN_PARTICIPANTES}\` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.records && data.records.length > 0) {
+        const sessionRecordIds = data.records[0].fields["Sesiones"] || [];
+        // Now fetch each session to get its ID Sesión value
+        if (sessionRecordIds.length > 0) {
+          const sesRes = await fetch(
+            \`\${SESIONES_URL}?filterByFormula=OR(\${sessionRecordIds.map(id=>\`RECORD_ID()='\${id}'\`).join(",")})&fields[]=ID%20Sesi%C3%B3n\`,
+            { headers: { Authorization: \`Bearer \${TOKEN_PARTICIPANTES}\` } }
+          );
+          if (sesRes.ok) {
+            const sesData = await sesRes.json();
+            sesData.records.forEach(r => {
+              if (r.fields["ID Sesión"]) completedSessions.add(r.fields["ID Sesión"]);
+            });
+          }
+        }
+      }
+    }
+  } catch(e) { console.warn("No se pudieron cargar sesiones:", e); }
+
+  // Render modules with lock logic:
+  // Module 0 (Autoconocimiento) always unlocked
+  // Module N unlocked if module N-1 is completed
+  $("modules-grid").innerHTML = MODULES.map((m, i) => {
+    const done     = completedSessions.has(m.sessionId);
+    const unlocked = i === 0 || completedSessions.has(MODULES[i-1].sessionId);
+    if (unlocked) {
+      return `
+        <a class="mod-card ${done ? 'mod-done' : ''}" href="/${m.slug}?id=${encodeURIComponent(p.id)}" style="--mod-color:${m.color}">
+          <img class="mod-icon" src="${m.icon}" alt="${m.name}" loading="lazy"/>
+          <div class="mod-name">${m.name}</div>
+          ${done ? `<div class="mod-check" style="color:${m.color}">✓ Completado</div>` : `<div class="mod-dot"></div>`}
+        </a>`;
+    } else {
+      return `
+        <div class="mod-card mod-locked" style="--mod-color:#ccc" title="Completa los módulos anteriores para acceder">
+          <img class="mod-icon" src="${m.icon}" alt="${m.name}" loading="lazy" style="filter:grayscale(1);opacity:.4;"/>
+          <div class="mod-name" style="color:#bbb;">${m.name}</div>
+          <div class="mod-lock">🔒</div>
+        </div>`;
+    }
+  }).join("");
 }
 
 function backToLookup() {
