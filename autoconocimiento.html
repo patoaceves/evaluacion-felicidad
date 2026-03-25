@@ -32,7 +32,7 @@ body{display:flex;flex-direction:column;min-height:100vh;font-family:'Karla',san
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .step{animation:fadeUp .35s ease both;}
 .hidden{display:none!important;}
-#step-confirm{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 200px);}
+#step-confirm{display:flex;align-items:center;justify-content:center;}
 .loading-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 20px;}
 .load-spin{width:40px;height:40px;border:3px solid rgba(127,148,254,.2);border-top-color:var(--area);border-radius:50%;animation:spin .8s linear infinite;}
 .load-text{color:var(--muted);font-size:14px;}
@@ -294,7 +294,7 @@ function showConfirm(){
   hide("step-quiz");
   // Mostrar pantalla de confirmación limpia
   $("step-confirm").innerHTML = `
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;text-align:center;padding:20px;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;text-align:center;padding:40px 20px;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
         <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2cb617a75ead08dbe2.png" alt="Autoconocimiento" style="width:64px;height:64px;"/>
         <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#7f94fe;">Autoevaluación</span></div>
