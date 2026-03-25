@@ -311,7 +311,7 @@ async function showModules() {
   $("g-avatar").textContent      = ini;
   $("g-avatar").style.background = "#7f94fe";
   $("g-name").textContent        = p.nombre || p.id;
-  $("g-sub").textContent         = `ID: ${p.id}  ·  Elige el módulo a evaluar`;
+  $("g-sub").textContent         = `ID: ${p.id}`;
   hide("step-lookup");
   hide("state-loading");
   show("step-modules");
