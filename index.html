@@ -280,7 +280,7 @@ async function buscarID() {
       };
       showModules();
     } else {
-      showLookupError(`No existe el ID <strong>${raw}</strong>. Verifica que sea correcto o <a href="https://participantes.sophiamx.org" target="_blank">encuéntralo aquí</a>.`);
+      showLookupError(`El ID <strong>${raw}</strong> no existe. Verifica que sea correcto o <a href="https://participantes.sophiamx.org" target="_blank">encuéntralo aquí</a>.`);
     }
   } catch(e) {
     showLookupError(e.message || "No pudimos conectar. Intenta de nuevo.");
