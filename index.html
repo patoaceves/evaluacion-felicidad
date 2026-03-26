@@ -318,7 +318,7 @@ async function showModules() {
   // Consultar Sesiones filtrando por id participante txt
   let completedSessions = new Set();
   try {
-    const formula = encodeURIComponent(`({ID Participante (txt)}="${p.id}")`);
+    const formula = encodeURIComponent(`AND({ID Participante (txt)}="${p.id}",{Estatus}="Activo")`);
     const res = await fetch(
       `${SESIONES_URL}?filterByFormula=${formula}`,
       { headers: { Authorization: `Bearer ${TOKEN_EVALUACIONES}` } }
