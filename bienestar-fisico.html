@@ -146,7 +146,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
         <div class="greeting-id" id="greeting-id-txt"></div>
       </div>
     </div>
-    <h1>Bienestar F\u00edsico</h1>
+    <h1>Bienestar Físico</h1>
     <p class="form-hint">Responde cada pregunta en una escala del <strong>1</strong> al <strong>5</strong>, donde 1 es muy mal y 5 es muy bien.</p>
     <div style="display:flex;gap:10px;margin-top:8px;">
       <button class="btn secondary" type="button" style="white-space:nowrap;padding:0 18px;flex-shrink:0;" onclick="window.location.href='/?id='+encodeURIComponent(participant.id)">← Regresar</button>
@@ -210,27 +210,27 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
-const MODULE            = 'Bienestar F\u00edsico';
+const MODULE            = 'Bienestar Físico';
 const AREA_COLOR        = '#ff9e3c';
 let TOKEN_PARTICIPANTES = '';
 let TOKEN_EVALUACIONES  = '';
 
 const items = [
-  ["actividad",    "\u00bfRealizo actividad f\u00edsica regular (al menos 3 veces por semana) de forma constante?"],
-  ["energia",      "\u00bfMe siento con energ\u00eda suficiente durante el d\u00eda para hacer lo que necesito y lo que disfruto?"],
-  ["sueno",        "\u00bfDuermo entre 7 y 9 horas de manera reparadora y me despierto descansado?"],
-  ["alimentacion", "\u00bfMi alimentaci\u00f3n diaria es variada, equilibrada y mayormente consciente?"],
-  ["cuerpo",       "\u00bfTengo una relaci\u00f3n positiva con mi cuerpo, sin exceso de autocr\u00edtica ni descuido?"],
-  ["estres",       "\u00bfManejo el estr\u00e9s f\u00edsico (tensi\u00f3n muscular, dolores recurrentes) de manera efectiva?"],
-  ["habitos",      "\u00bfMis h\u00e1bitos diarios (movimiento, descanso, hidrataci\u00f3n) reflejan el cuidado que quiero darle a mi cuerpo?"],
-  ["vitalidad",    "\u00bfSientes que tu estado f\u00edsico actual te permite vivir con la vitalidad y presencia que deseas?"]
+  ["actividad",    "¿Realizo actividad física regular (al menos 3 veces por semana) de forma constante?"],
+  ["energia",      "¿Me siento con energía suficiente durante el día para hacer lo que necesito y lo que disfruto?"],
+  ["sueno",        "¿Duermo entre 7 y 9 horas de manera reparadora y me despierto descansado?"],
+  ["alimentacion", "¿Mi alimentación diaria es variada, equilibrada y mayormente consciente?"],
+  ["cuerpo",       "¿Tengo una relación positiva con mi cuerpo, sin exceso de autocrítica ni descuido?"],
+  ["estres",       "¿Manejo el estrés físico (tensión muscular, dolores recurrentes) de manera efectiva?"],
+  ["habitos",      "¿Mis hábitos diarios (movimiento, descanso, hidratación) reflejan el cuidado que quiero darle a mi cuerpo?"],
+  ["vitalidad",    "¿Sientes que tu estado físico actual te permite vivir con la vitalidad y presencia que deseas?"]
 ];
 
 const bandTexts = {
-  "Alto":  {color:"#2E7D32",lead:"Bienestar f\u00edsico s\u00f3lido. Tu cuerpo es un aliado activo. Movimiento, descanso y alimentaci\u00f3n trabajan a tu favor de manera consistente.",steps:["A\u00f1ade un reto f\u00edsico nuevo cada mes para mantener la motivaci\u00f3n y el progreso.","Practica la recuperaci\u00f3n activa: estiramientos o movilidad 10 min despu\u00e9s de cada sesi\u00f3n."]},
-  "Medio": {color:"#C88D2D",lead:"Tienes buenas bases pero hay inconsistencia. Algunos h\u00e1bitos funcionan, otros a\u00fan no est\u00e1n arraigados. Peque\u00f1os ajustes pueden marcar una gran diferencia.",steps:["Agenda tus sesiones de actividad f\u00edsica como citas inamovibles en tu semana.","Mejora un h\u00e1bito a la vez: empieza por el sue\u00f1o o la hidrataci\u00f3n esta semana."]},
-  "Bajo":  {color:"#B00020",lead:"Tu cuerpo necesita atenci\u00f3n. No es un juicio, es un punto de partida. Con cambios peque\u00f1os y consistentes puedes transformar tu energ\u00eda y vitalidad.",steps:["Camina 20 minutos al d\u00eda durante 2 semanas. Es el punto de entrada m\u00e1s efectivo.","Establece una hora fija para dormir esta semana y obs\u00e9rvalo durante 7 d\u00edas."]},
-  note:"Nota: Estos resultados no son diagn\u00f3sticos. \u00dasalos como l\u00ednea base y vuelve a medir tras 2\u20134 semanas."
+  "Alto":  {color:"#2E7D32",lead:"Bienestar físico sólido. Tu cuerpo es un aliado activo. Movimiento, descanso y alimentación trabajan a tu favor de manera consistente.",steps:["Añade un reto físico nuevo cada mes para mantener la motivación y el progreso.","Practica la recuperación activa: estiramientos o movilidad 10 min después de cada sesión."]},
+  "Medio": {color:"#C88D2D",lead:"Tienes buenas bases pero hay inconsistencia. Algunos hábitos funcionan, otros aún no están arraigados. Pequeños ajustes pueden marcar una gran diferencia.",steps:["Agenda tus sesiones de actividad física como citas inamovibles en tu semana.","Mejora un hábito a la vez: empieza por el sueño o la hidratación esta semana."]},
+  "Bajo":  {color:"#B00020",lead:"Tu cuerpo necesita atención. No es un juicio, es un punto de partida. Con cambios pequeños y consistentes puedes transformar tu energía y vitalidad.",steps:["Camina 20 minutos al día durante 2 semanas. Es el punto de entrada más efectivo.","Establece una hora fija para dormir esta semana y obsérvalo durante 7 días."]},
+  note:"Nota: Estos resultados no son diagnósticos. Úsalos como línea base y vuelve a medir tras 2–4 semanas."
 };
 
 let participant = {recordId:"",id:"",nombre:"",apellidos:"",email:""};
@@ -309,7 +309,7 @@ function renderQuestion(){
 }
 
 $("prevBtn").addEventListener("click",()=>{if(idx>0){idx--;renderQuestion();}});
-$("nextBtn").addEventListener("click",()=>{if(!answers.get(items[idx][0])){$("validation").textContent="Selecciona una opci\u00f3n para continuar.";return;}if(idx<items.length-1){idx++;renderQuestion();}});
+$("nextBtn").addEventListener("click",()=>{if(!answers.get(items[idx][0])){$("validation").textContent="Selecciona una opción para continuar.";return;}if(idx<items.length-1){idx++;renderQuestion();}});
 $("submitBtn").addEventListener("click",()=>{renderResultAndSend();});
 
 function showConfirm(){
@@ -319,7 +319,7 @@ function showConfirm(){
   $("step-confirm").innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;text-align:center;padding:40px 20px;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
-        <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd81fc129b408.png" alt="Bienestar F\u00edsico" style="width:64px;height:64px;"/>
+        <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c003fd81fc129b408.png" alt="Bienestar Físico" style="width:64px;height:64px;"/>
         <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#ffcb3c;">Bienestar Emocional</span></div>
       </div>
       <button class="btn" type="button" onclick="renderResultAndSend()" style="padding:0 40px;">Ver mis Resultados</button>
@@ -374,7 +374,7 @@ function renderResultAndSend(skipSave=false){
   $("bar").style.width="100%";$("qIndex").textContent="Resultado";
   ["prevBtn","nextBtn","submitBtn"].forEach(id=>$(id).style.display="none");
   hide("step-quiz");hide("step-confirm");show("step-result");
-  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>Nivel ${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1\u20132 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
+  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>Nivel ${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1–2 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
   drawWedge($("wedgeMount"),pct);
   if(!skipSave) saveToAirtable(); // guarda silenciosamente
 }
