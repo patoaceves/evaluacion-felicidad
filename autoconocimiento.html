@@ -267,7 +267,7 @@ async function init(){
 async function fetchAndShowLastResult(){
   try{
     // filterByFormula usa nombre de campo, no field ID
-    const formula=encodeURIComponent(`({ID Participante (txt)}="${participant.id}")`);
+    const formula=encodeURIComponent(`AND({ID Participante (txt)}="${participant.id}",{Estatus}="Activo")`);
     const res=await fetch(
       `${SESIONES_URL}?filterByFormula=${formula}&sort%5B0%5D%5Bfield%5D=Created&sort%5B0%5D%5Bdirection%5D=desc&maxRecords=1`,
       {headers:{Authorization:`Bearer ${TOKEN_EVALUACIONES}`}}
