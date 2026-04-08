@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Bienestar Físico — Evaluación Sophia</title>
-<link rel="icon" type="image/png" href="/branding/favicon.png"/>
+<title>Autoconocimiento — Evaluación Sophia</title>
+<link rel="icon" type="image/png" href="/assets/brand/favicon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Poltawski+Nowy:wght@600;700&display=swap" rel="stylesheet"/>
@@ -14,7 +14,7 @@
   --red:#C0112F; --red-soft:rgba(192,17,47,.12);
   --bg:#FFFCFA; --text:#1a1a1a; --muted:#6b7280; --border:#e5e0db;
   --err-bg:#fce4e4; --err-text:#9b1c1c;
-  --radius:18px; --shadow:0 8px 28px rgba(0,0,0,.09); --area:#8d9438;
+  --radius:18px; --shadow:0 8px 28px rgba(0,0,0,.09); --area:#66a3f4;
 }
 html{background:var(--bg);}
 body{display:flex;flex-direction:column;min-height:100vh;font-family:'Karla',sans-serif;font-size:15px;line-height:1.6;color:var(--text);background:var(--bg);}
@@ -146,7 +146,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
         <div class="greeting-id" id="greeting-id-txt"></div>
       </div>
     </div>
-    <h1>Bienestar Físico</h1>
+    <h1>Autoconocimiento</h1>
     <p class="form-hint">Responde cada pregunta en una escala del <strong>1</strong> al <strong>5</strong>, donde 1 es muy mal y 5 es muy bien.</p>
     <div style="display:flex;gap:10px;margin-top:8px;">
       <button class="btn secondary" type="button" style="white-space:nowrap;padding:0 18px;flex-shrink:0;" onclick="window.location.href='/?id='+encodeURIComponent(participant.id)">← Regresar</button>
@@ -210,27 +210,27 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
 <script>
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
-const MODULE            = 'Bienestar Físico';
-const AREA_COLOR        = '#8d9438';
+const MODULE            = 'Autoconocimiento';
+const AREA_COLOR        = '#66a3f4';
 let TOKEN_PARTICIPANTES = '';
 let TOKEN_EVALUACIONES  = '';
 
 const items = [
-  ["actividad",    "¿Realizo actividad física regular (al menos 3 veces por semana) de forma constante?"],
-  ["energia",      "¿Me siento con energía suficiente durante el día para hacer lo que necesito y lo que disfruto?"],
-  ["sueno",        "¿Duermo entre 7 y 9 horas de manera reparadora y me despierto descansado?"],
-  ["alimentacion", "¿Mi alimentación diaria es variada, equilibrada y mayormente consciente?"],
-  ["cuerpo",       "¿Tengo una relación positiva con mi cuerpo, sin exceso de autocrítica ni descuido?"],
-  ["estres",       "¿Manejo el estrés físico (tensión muscular, dolores recurrentes) de manera efectiva?"],
-  ["habitos",      "¿Mis hábitos diarios (movimiento, descanso, hidratación) reflejan el cuidado que quiero darle a mi cuerpo?"],
-  ["vitalidad",    "¿Sientes que tu estado físico actual te permite vivir con la vitalidad y presencia que deseas?"]
+  ["adecuadamente", "\u00bfReconozco y utilizo mis fortalezas en el momento y lugar adecuados para lo que la situaci\u00f3n requiere?"],
+  ["disfrute",      "\u00bfHe experimentado alegr\u00eda o satisfacci\u00f3n al descubrir aspectos nuevos de m\u00ed mismo, m\u00e1s all\u00e1 de logros externos?"],
+  ["emociones_pos", "\u00bfDe qu\u00e9 manera el conocerme mejor influye en mi capacidad para generar y mantener estados emocionales armoniosos?"],
+  ["compromiso",    "\u00bfMe comprometo de manera persistente con mi propio crecimiento personal y autoconocimiento, incluso cuando es inc\u00f3modo?"],
+  ["logro",         "\u00bfCu\u00e1ndo he superado una limitaci\u00f3n personal o he potenciado una fortaleza gracias a mi autoconocimiento?"],
+  ["satisfaccion",  "\u00bfSiento que el conocimiento que tengo de m\u00ed mismo corresponde con la persona que quiero llegar a ser?"],
+  ["sentido",       "\u00bfDe qu\u00e9 forma conocer mis fortalezas y debilidades me ayuda a encontrar un prop\u00f3sito m\u00e1s profundo en mi vida?"],
+  ["trascendencia", "\u00bfC\u00f3mo puede mi autoconocimiento contribuir al bienestar de otros o inspirar a quienes me rodean?"]
 ];
 
 const bandTexts = {
-  "Alto":  {color:"#2E7D32",lead:"Bienestar físico sólido. Tu cuerpo es un aliado activo. Movimiento, descanso y alimentación trabajan a tu favor de manera consistente.",steps:["Añade un reto físico nuevo cada mes para mantener la motivación y el progreso.","Practica la recuperación activa: estiramientos o movilidad 10 min después de cada sesión."]},
-  "Medio": {color:"#C88D2D",lead:"Tienes buenas bases pero hay inconsistencia. Algunos hábitos funcionan, otros aún no están arraigados. Pequeños ajustes pueden marcar una gran diferencia.",steps:["Agenda tus sesiones de actividad física como citas inamovibles en tu semana.","Mejora un hábito a la vez: empieza por el sueño o la hidratación esta semana."]},
-  "Bajo":  {color:"#B00020",lead:"Tu cuerpo necesita atención. No es un juicio, es un punto de partida. Con cambios pequeños y consistentes puedes transformar tu energía y vitalidad.",steps:["Camina 20 minutos al día durante 2 semanas. Es el punto de entrada más efectivo.","Establece una hora fija para dormir esta semana y obsérvalo durante 7 días."]},
-  note:"Nota: Estos resultados no son diagnósticos. Úsalos como línea base y vuelve a medir tras 2–4 semanas."
+  "Alto":  {color:"#2E7D32",lead:"Autoconocimiento s\u00f3lido. Sabes nombrar lo que te pasa, reconocer tus patrones y ajustar tus decisiones con realismo y prop\u00f3sito.",steps:["Usa una fortaleza en una forma nueva cada d\u00eda (15 min).","Tres cosas buenas (5 min cada noche). Registra lo positivo del d\u00eda y tu papel en ello."]},
+  "Medio": {color:"#C88D2D",lead:"Vas en buen camino. Ya tienes claridad en varios aspectos, pero hay momentos de duda. Este es el mejor punto para sistematizar h\u00e1bitos.",steps:["Mejor Yo Posible (15 min). Escribe tu mejor versi\u00f3n dentro de 6\u201312 meses.","Diario de fortalezas (10 min, 2\u20133 veces/semana)."]},
+  "Bajo":  {color:"#B00020",lead:"Punto de partida claro. Hoy cuesta leer tus estados internos. La buena noticia: el autoconocimiento se entrena con pr\u00e1cticas breves y consistentes.",steps:["Tres cosas buenas (diario). Empieza por reconectar con lo que s\u00ed funciona.","Una fortaleza, un uso nuevo (diario, 10\u201315 min)."]},
+  note:"Nota: Estos resultados no son diagn\u00f3sticos. \u00dasalos como l\u00ednea base y vuelve a medir tras 2\u20134 semanas."
 };
 
 let participant = {recordId:"",id:"",nombre:"",apellidos:"",email:""};
@@ -309,7 +309,7 @@ function renderQuestion(){
 }
 
 $("prevBtn").addEventListener("click",()=>{if(idx>0){idx--;renderQuestion();}});
-$("nextBtn").addEventListener("click",()=>{if(!answers.get(items[idx][0])){$("validation").textContent="Selecciona una opción para continuar.";return;}if(idx<items.length-1){idx++;renderQuestion();}});
+$("nextBtn").addEventListener("click",()=>{if(!answers.get(items[idx][0])){$("validation").textContent="Selecciona una opci\u00f3n para continuar.";return;}if(idx<items.length-1){idx++;renderQuestion();}});
 $("submitBtn").addEventListener("click",()=>{renderResultAndSend();});
 
 function showConfirm(){
@@ -319,8 +319,8 @@ function showConfirm(){
   $("step-confirm").innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;text-align:center;padding:40px 20px;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
-        <img src="/iconos/color/bienestar-fisico.svg" alt="Bienestar Físico" style="width:64px;height:64px;"/>
-        <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#ffcb3c;">Bienestar Emocional</span></div>
+        <img src="/assets/iconos/color/autoconocimiento.svg" alt="Autoconocimiento" style="width:64px;height:64px;"/>
+        <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#7f94fe;">Autoevaluación</span></div>
       </div>
       <button class="btn" type="button" onclick="renderResultAndSend()" style="padding:0 40px;">Ver mis Resultados</button>
     </div>`;
@@ -335,7 +335,7 @@ async function saveToAirtable(){
   if(!TOKEN_EVALUACIONES)return{ok:false,msg:"Falta EVALUACION_FELICIDAD en Vercel."};
   const fields={
     "fldC7F9TD6KaZYJhl": MODULE,
-    "fld0s34qpEzzoq4u4": `${participant.id}-03-${Date.now()}`,
+    "fld0s34qpEzzoq4u4": `${participant.id}-01-${Date.now()}`,
     "fldRjcAjHe0fAixiA": participant.id,
     "fldNQEhB4NUOXUAQY": participant.email,
     "fld7TLpf9h1Fs7oIS": answers.get(items[0][0])||null,
@@ -374,7 +374,7 @@ function renderResultAndSend(skipSave=false){
   $("bar").style.width="100%";$("qIndex").textContent="Resultado";
   ["prevBtn","nextBtn","submitBtn"].forEach(id=>$(id).style.display="none");
   hide("step-quiz");hide("step-confirm");show("step-result");
-  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>Nivel ${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1–2 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
+  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>Nivel ${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1\u20132 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
   drawWedge($("wedgeMount"),pct);
   if(!skipSave) saveToAirtable(); // guarda silenciosamente
 }

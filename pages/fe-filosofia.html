@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Trabajo con Propósito — Evaluación Sophia</title>
-<link rel="icon" type="image/png" href="/branding/favicon.png"/>
+<title>Fe y Filosofía de Vida — Evaluación Sophia</title>
+<link rel="icon" type="image/png" href="/assets/brand/favicon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Poltawski+Nowy:wght@600;700&display=swap" rel="stylesheet"/>
@@ -24,7 +24,7 @@
   --err-text:   #9b1c1c;
   --radius:     18px;
   --shadow:     0 8px 28px rgba(0,0,0,.09);
-  --area:       #66a3f4;
+  --area:       #e3a52d;
 }
 html { background: var(--bg); }
 body { display:flex; flex-direction:column; min-height:100vh; font-family:'Karla',sans-serif; font-size:15px; line-height:1.6; color:var(--text); background:var(--bg); }
@@ -129,7 +129,7 @@ input::placeholder { color:#b0a9a4; }
   <div id="step-lookup" class="step">
     <div class="eyebrow">SOPHIA · Evaluación Felicidad</div>
     <div class="accent-bar"></div>
-    <h1>Trabajo con Propósito</h1>
+    <h1>Fe y Filosofía de Vida</h1>
     <p class="subtitle">Ingresa tu ID Participante para comenzar.</p>
     <div class="field">
       <label for="id-input">ID Participante</label>
@@ -178,11 +178,11 @@ const TOKEN_PARTICIPANTES  = window.__QUERY_ID_PARTICIPANTE__ || '';
 const TOKEN_EVALUACIONES   = window.__EVALUACION_FELICIDAD__ || '';
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
-const MODULE            = 'Trabajo con Propósito';
-const AREA_COLOR        = '#66a3f4';
+const MODULE            = 'Fe y Filosofía de Vida';
+const AREA_COLOR        = '#e3a52d';
 
-const items = [["adecuadamente", "¿Mi trabajo está bien hecho?"], ["disfrute", "¿Experimento disfrute en mi trabajo más allá del logro material?"], ["emociones_pos", "¿Me siento en armonía y con perspectiva positiva hacia el futuro en mi trabajo?"], ["compromiso", "¿Desarrollo mis ocupaciones con entrega y dedicación?"], ["logro", "¿Tengo posibilidad de experimentar crecimiento o éxito en lo que hago?"], ["satisfaccion", "¿Existe balance entre lo que quisiera y lo que tengo en mi vida laboral?"], ["sentido", "¿Mis trabajos los hago por o para alguien más allá de mí mismo?"], ["trascendencia", "¿Lo que hago trasciende mi beneficio personal?"]];
-const bandTexts = {"Alto": {"color": "#2E7D32", "lead": "Tu trabajo está conectado con propósito mayor e impacto real. Existe coherencia entre valores, ocupación y sentido de trascendencia. Esa alineación es una fortaleza valiosa.", "steps": ["Protege esta alineación: revisa mensualmente si tus proyectos siguen conectados con tus valores más profundos.", "Convierte tu propósito en impacto concreto: mentoría, servicio o un proyecto que extienda tu alcance más allá de ti."]}, "Medio": {"color": "#C88D2D", "lead": "Cumples y logras, pero el propósito es intermitente o predominantemente externo. Hay base sólida para profundizar la conexión entre trabajo y sentido.", "steps": ["Escribe en dos líneas tu 'para qué' más profundo y revísalo al tomar decisiones laborales esta semana.", "Identifica 1 tarea diaria que haces por alguien más y hazla con esa conciencia explícita."]}, "Bajo": {"color": "#B00020", "lead": "Hay desconexión entre ocupación e identidad o propósito. Riesgo de desgaste por falta de sentido. El punto de partida es reconectar con lo que importa.", "steps": ["Reflexión de valores (10 min): ¿qué 3 cosas harías aunque no te pagaran? ¿cómo se relacionan con lo que haces hoy?", "Un acto de servicio deliberado esta semana: haz algo en tu trabajo exclusivamente por el bien de otra persona."]}, "note": "Nota de rigor: Estos resultados no son diagnósticos. Úsalos como línea base personal y vuelve a medir tras 2–4 semanas de práctica para observar tendencia."};
+const items = [["adecuadamente", "¿Tengo una confianza profunda o creencia firme en algo o alguien que dirige mi vida?"], ["disfrute", "¿Vivir de acuerdo con mi fe o filosofía me permite experimentar momentos que califico como disfrutables y valiosos?"], ["emociones_pos", "¿Mi fe o filosofía de vida es motivo de emociones positivas como esperanza y gratitud?"], ["compromiso", "¿Mantengo de forma constante mis creencias fundamentales en la vida cotidiana?"], ["logro", "¿He experimentado avances o mejoras en mi relación con mi fe o filosofía de vida?"], ["satisfaccion", "¿Estoy satisfecho con la concordancia entre lo que espero de mi fe y cómo impacta mi vida?"], ["sentido", "¿Sé por qué me arraigo con fuerza a estas convicciones (propósito y trascendencia)?"], ["trascendencia", "¿Mi fe o filosofía me abre al otro y a un sentido de lo Absoluto, impactando positivamente a mi entorno?"]];
+const bandTexts = {"Alto": {"color": "#2E7D32", "lead": "Convicción integrada y vital. Tu fe o filosofía guía decisiones, nutre esperanza y gratitud, y se expresa en prácticas y comunidad. Esto suele asociarse con mayor bienestar, propósito y conductas saludables.", "steps": ["Ritual diario de silencio, oración o meditación (10–15 min) + registro brevísimo de esperanza y gratitud.", "Comunidad semanal: participa o sirve 1 vez por semana; o busca mentoría espiritual de quien admires."]}, "Medio": {"color": "#C88D2D", "lead": "Base clara pero intermitente. Hay convicción y momentos de gozo, aunque las prácticas no siempre son consistentes. Organizar ritual y comunidad suele consolidar el sentido.", "steps": ["Agenda fija: 2 bloques de 15 min/semana para práctica contemplativa; 1 asistencia o grupo.", "Escribe un 'enunciado de fe/vida' en dos líneas y revísalo al tomar decisiones importantes."]}, "Bajo": {"color": "#B00020", "lead": "Buen punto de partida. Hoy predomina la duda o la desconexión práctica. La recomendación es comenzar con micro-hábitos repetibles y una conversación guía.", "steps": ["Exploración de valores (10 min): anota por qué te atrae creer y a qué quieres pertenecer o servir.", "Práctica breve diaria (5 min): respiración, oración o lectura inspiradora."]}, "note": "Nota de rigor: Estos resultados no son diagnósticos. Úsalos como línea base personal y vuelve a medir tras 2–4 semanas de práctica para observar tendencia."};
 
 let participant = { recordId:"", id:"", nombre:"", apellidos:"", email:"" };
 let idx = 0;
