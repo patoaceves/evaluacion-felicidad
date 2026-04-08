@@ -62,7 +62,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
 .panel{opacity:0;transform:translateY(5px);transition:opacity 180ms ease,transform 180ms ease;}
 .panel.in{opacity:1;transform:translateY(0);}
 .q-title{font-family:'Poltawski Nowy',serif;font-size:1.1rem;font-weight:700;line-height:1.45;margin-bottom:32px;}
-.scale-row{display:grid;grid-template-columns:repeat(5,54px);gap:16px;}
+.scale-row{display:flex;gap:16px;}
 .scale-opt{position:relative;flex:0 0 auto;width:54px;height:54px;border-radius:50%;border:2.5px solid color-mix(in srgb,var(--area) 35%,white);background:#fff;cursor:pointer;user-select:none;transition:border 160ms,box-shadow 160ms,background 160ms;}
 .scale-opt:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);border-color:var(--area);}
 .scale-opt input{appearance:none;position:absolute;opacity:0;inset:0;cursor:pointer;}
@@ -295,7 +295,7 @@ function renderQuestion(){
   $("nextBtn").style.display=idx<items.length-1?"inline-flex":"none";
   $("submitBtn").style.display="none";
   const sel=answers.get(key);
-  $("panel").innerHTML=`<div class="q-title">${text}</div><div style="display:flex;justify-content:center;"><div class="scale-wrap"><div class="scale-row" role="radiogroup">${[1,2,3,4,5].map(v=>`<label class="scale-opt" data-val="${v}" data-checked="${sel===v}"><input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}\/></label>`).join("")}</div><div class="scale-labels"><span class="left">Muy en desacuerdo</span><span class="right">Muy de acuerdo</span></div></div></div>`;
+  $("panel").innerHTML=`<div class="q-title">${text}</div><div style="display:flex;justify-content:center;"><div class="scale-wrap"><div class="scale-row" role="radiogroup">${[1,2,3,4,5].map(v=>`<label class="scale-opt" data-val="${v}" data-checked="${sel===v}"><input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}\/></label>`).join("")}</div><div class="scale-labels"><span style="width:54px;text-align:center;display:inline-block;">Muy en desacuerdo</span><span style="width:54px;text-align:center;display:inline-block;">Muy de acuerdo</span></div></div></div>`;
   animIn();
   $("panel").querySelectorAll(".scale-opt").forEach(el=>{
     el.addEventListener("click",()=>{
