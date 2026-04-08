@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Evaluación Felicidad — Sophia</title>
-<link rel="icon" type="image/png" href="/favicon.png"/>
+<link rel="icon" type="image/png" href="/branding/favicon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Poltawski+Nowy:wght@600;700&display=swap" rel="stylesheet"/>
@@ -230,14 +230,14 @@ let TOKEN_PARTICIPANTES = '';
 let TOKEN_EVALUACIONES  = '';
 
 const MODULES = [
-  { name:"Autoconocimiento",       slug:"autoconocimiento",      color:"#66a3f4", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69d61f34a7dcb4cff03e2537.svg", sessionId:"Autoconocimiento" },
-  { name:"Bienestar Emocional",    slug:"bienestar-emocional",   color:"#d21744", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69d61f34a64a04ba15d897f3.svg", sessionId:"Bienestar Emocional" },
-  { name:"Bienestar Físico",       slug:"bienestar-fisico",      color:"#8d9438", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69d61f341f67b9b851ae85e9.svg", sessionId:"Bienestar Físico" },
-  { name:"Presencia Consciente",   slug:"presencia-consciente",  color:"#8d9438", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69d61f34a64a04ba15d897f4.svg", sessionId:"Presencia Consciente" },
-  { name:"Vínculos Vitales",       slug:"vinculos-vitales",      color:"#d21744", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69d61f345a37de2fdac53b85.svg", sessionId:"Vínculos Vitales" },
-  { name:"Trabajo con Propósito",  slug:"trabajo-proposito",     color:"#66a3f4", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69d61f342fa0e795cc4ce427.svg", sessionId:"Trabajo con Propósito" },
-  { name:"Estética Existencial",   slug:"estetica-existencial",  color:"#e3a52d", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69d61f342428bc4405939e91.svg", sessionId:"Estética Existencial" },
-  { name:"Fe y Filosofía de Vida", slug:"fe-filosofia",          color:"#e3a52d", icon:"https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69d61f344e83259002d00cfe.svg", sessionId:"Fe y Filosofía de Vida" },
+  { name:"Autoconocimiento",       slug:"autoconocimiento",      color:"#66a3f4", icon:"/iconos/color/autoconocimiento.svg", sessionId:"Autoconocimiento" },
+  { name:"Bienestar Emocional",    slug:"bienestar-emocional",   color:"#d21744", icon:"/iconos/color/bienestar-emocional.svg", sessionId:"Bienestar Emocional" },
+  { name:"Bienestar Físico",       slug:"bienestar-fisico",      color:"#8d9438", icon:"/iconos/color/bienestar-fisico.svg", sessionId:"Bienestar Físico" },
+  { name:"Presencia Consciente",   slug:"presencia-consciente",  color:"#8d9438", icon:"/iconos/color/presencia-consciente.svg", sessionId:"Presencia Consciente" },
+  { name:"Vínculos Vitales",       slug:"vinculos-vitales",      color:"#d21744", icon:"/iconos/color/vinculos-vitales.svg", sessionId:"Vínculos Vitales" },
+  { name:"Trabajo con Propósito",  slug:"trabajo-proposito",     color:"#66a3f4", icon:"/iconos/color/trabajo-proposito.svg", sessionId:"Trabajo con Propósito" },
+  { name:"Estética Existencial",   slug:"estetica-existencial",  color:"#e3a52d", icon:"/iconos/color/estetica-existencial.svg", sessionId:"Estética Existencial" },
+  { name:"Fe y Filosofía de Vida", slug:"fe-filosofia",          color:"#e3a52d", icon:"/iconos/color/fe-filosofia.svg", sessionId:"Fe y Filosofía de Vida" },
 ];
 
 
@@ -352,13 +352,13 @@ async function showModules() {
             <div class="mod-name">${m.name}</div>
             <div class="mod-check" style="color:${m.color}">✓ Completado</div>
             <div class="mod-hover-overlay">
-              <a class="mod-hover-btn primary" href="/${m.slug}?id=${encodeURIComponent(p.id)}&ver=1" style="background:${m.color};">Ver mis Resultados</a>
-              <a class="mod-hover-btn secondary" href="/${m.slug}?id=${encodeURIComponent(p.id)}&nuevo=1">Contestar de Nuevo</a>
+              <a class="mod-hover-btn primary" href="/evaluaciones/${m.slug}?id=${encodeURIComponent(p.id)}&ver=1" style="background:${m.color};">Ver mis Resultados</a>
+              <a class="mod-hover-btn secondary" href="/evaluaciones/${m.slug}?id=${encodeURIComponent(p.id)}&nuevo=1">Contestar de Nuevo</a>
             </div>
           </div>`;
       }
       return `
-        <a class="mod-card" href="/${m.slug}?id=${encodeURIComponent(p.id)}" style="--mod-color:${m.color};${delay}">
+        <a class="mod-card" href="/evaluaciones/${m.slug}?id=${encodeURIComponent(p.id)}" style="--mod-color:${m.color};${delay}">
           <img class="mod-icon" src="${m.icon}" alt="${m.name}" loading="lazy"/>
           <div class="mod-name">${m.name}</div>
           <div class="mod-dot"></div>
@@ -366,7 +366,7 @@ async function showModules() {
     } else {
       return `
         <div class="mod-card mod-locked" style="--mod-color:#ccc;${delay}" title="Completa los módulos anteriores para acceder">
-          <img class="mod-icon" src="${m.icon}" alt="${m.name}" loading="lazy" style="filter:grayscale(1);opacity:.4;"/>
+          <img class="mod-icon" src="/iconos/gris/${m.slug}-gris.svg" alt="${m.name}" loading="lazy" style="opacity:.7;"/>
           <div class="mod-name" style="color:#bbb;">${m.name}</div>
           <svg class="mod-lock" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>`;
