@@ -24,7 +24,7 @@
   --err-text:   #9b1c1c;
   --radius:     18px;
   --shadow:     0 8px 28px rgba(0,0,0,.09);
-  --area:       #82beff;
+  --area:       #66a3f4;
 }
 html { background: var(--bg); }
 body { display:flex; flex-direction:column; min-height:100vh; font-family:'Karla',sans-serif; font-size:15px; line-height:1.6; color:var(--text); background:var(--bg); }
@@ -179,7 +179,7 @@ const TOKEN_EVALUACIONES   = window.__EVALUACION_FELICIDAD__ || '';
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
 const MODULE            = 'Trabajo con Propósito';
-const AREA_COLOR        = '#82beff';
+const AREA_COLOR        = '#66a3f4';
 
 const items = [["adecuadamente", "¿Mi trabajo está bien hecho?"], ["disfrute", "¿Experimento disfrute en mi trabajo más allá del logro material?"], ["emociones_pos", "¿Me siento en armonía y con perspectiva positiva hacia el futuro en mi trabajo?"], ["compromiso", "¿Desarrollo mis ocupaciones con entrega y dedicación?"], ["logro", "¿Tengo posibilidad de experimentar crecimiento o éxito en lo que hago?"], ["satisfaccion", "¿Existe balance entre lo que quisiera y lo que tengo en mi vida laboral?"], ["sentido", "¿Mis trabajos los hago por o para alguien más allá de mí mismo?"], ["trascendencia", "¿Lo que hago trasciende mi beneficio personal?"]];
 const bandTexts = {"Alto": {"color": "#2E7D32", "lead": "Tu trabajo está conectado con propósito mayor e impacto real. Existe coherencia entre valores, ocupación y sentido de trascendencia. Esa alineación es una fortaleza valiosa.", "steps": ["Protege esta alineación: revisa mensualmente si tus proyectos siguen conectados con tus valores más profundos.", "Convierte tu propósito en impacto concreto: mentoría, servicio o un proyecto que extienda tu alcance más allá de ti."]}, "Medio": {"color": "#C88D2D", "lead": "Cumples y logras, pero el propósito es intermitente o predominantemente externo. Hay base sólida para profundizar la conexión entre trabajo y sentido.", "steps": ["Escribe en dos líneas tu 'para qué' más profundo y revísalo al tomar decisiones laborales esta semana.", "Identifica 1 tarea diaria que haces por alguien más y hazla con esa conciencia explícita."]}, "Bajo": {"color": "#B00020", "lead": "Hay desconexión entre ocupación e identidad o propósito. Riesgo de desgaste por falta de sentido. El punto de partida es reconectar con lo que importa.", "steps": ["Reflexión de valores (10 min): ¿qué 3 cosas harías aunque no te pagaran? ¿cómo se relacionan con lo que haces hoy?", "Un acto de servicio deliberado esta semana: haz algo en tu trabajo exclusivamente por el bien de otra persona."]}, "note": "Nota de rigor: Estos resultados no son diagnósticos. Úsalos como línea base personal y vuelve a medir tras 2–4 semanas de práctica para observar tendencia."};
