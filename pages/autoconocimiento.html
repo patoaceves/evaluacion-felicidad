@@ -67,8 +67,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
 .scale-opt:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);border-color:var(--area);}
 .scale-opt input{appearance:none;position:absolute;opacity:0;inset:0;cursor:pointer;}
 .scale-opt[data-checked="true"]{border-color:var(--area);background:var(--area);box-shadow:0 0 0 4px color-mix(in srgb,var(--area) 25%,transparent);}
-.scale-labels{display:grid;grid-template-columns:repeat(5,54px);gap:16px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:10px;}
-.scale-labels span{text-align:center;white-space:nowrap;}
+.scale-labels{display:flex;justify-content:space-between;width:334px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:10px;}
 .scale-wrap{display:flex;flex-direction:column;}
 .controls{display:flex;justify-content:space-between;gap:10px;margin-top:14px;}
 .validation{color:var(--red);font-weight:600;margin-top:10px;min-height:1.3em;font-size:13px;}
@@ -296,7 +295,7 @@ function renderQuestion(){
   $("nextBtn").style.display=idx<items.length-1?"inline-flex":"none";
   $("submitBtn").style.display="none";
   const sel=answers.get(key);
-  $("panel").innerHTML=`<div class="q-title">${text}</div><div style="display:flex;justify-content:center;"><div class="scale-wrap"><div class="scale-row" role="radiogroup">${[1,2,3,4,5].map(v=>`<label class="scale-opt" data-val="${v}" data-checked="${sel===v}"><input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}\/></label>`).join("")}</div><div class="scale-labels"><span>Muy en desacuerdo</span><span></span><span></span><span></span><span>Muy de acuerdo</span></div></div></div>`;
+  $("panel").innerHTML=`<div class="q-title">${text}</div><div style="display:flex;justify-content:center;"><div class="scale-wrap"><div class="scale-row" role="radiogroup">${[1,2,3,4,5].map(v=>`<label class="scale-opt" data-val="${v}" data-checked="${sel===v}"><input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}\/></label>`).join("")}</div><div class="scale-labels"><span>Muy en desacuerdo</span><span>Muy de acuerdo</span></div></div></div>`;
   animIn();
   $("panel").querySelectorAll(".scale-opt").forEach(el=>{
     el.addEventListener("click",()=>{
