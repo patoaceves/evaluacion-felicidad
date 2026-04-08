@@ -14,7 +14,7 @@
   --red:#C0112F; --red-soft:rgba(192,17,47,.12);
   --bg:#FFFCFA; --text:#1a1a1a; --muted:#6b7280; --border:#e5e0db;
   --err-bg:#fce4e4; --err-text:#9b1c1c;
-  --radius:18px; --shadow:0 8px 28px rgba(0,0,0,.09); --area:#ffcb3c;
+  --radius:18px; --shadow:0 8px 28px rgba(0,0,0,.09); --area:#d21744;
 }
 html{background:var(--bg);}
 body{display:flex;flex-direction:column;min-height:100vh;font-family:'Karla',sans-serif;font-size:15px;line-height:1.6;color:var(--text);background:var(--bg);}
@@ -211,7 +211,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
 const PARTICIPANTES_URL = 'https://api.airtable.com/v0/appGQ2udExw1H21mk/tbldMm6u16mQhQvcz';
 const SESIONES_URL      = 'https://api.airtable.com/v0/appP2GkonH63rHaui/tbl3QNGVivE37D0Z3';
 const MODULE            = 'Bienestar Emocional';
-const AREA_COLOR        = '#ffcb3c';
+const AREA_COLOR        = '#d21744';
 let TOKEN_PARTICIPANTES = '';
 let TOKEN_EVALUACIONES  = '';
 
@@ -319,7 +319,7 @@ function showConfirm(){
   $("step-confirm").innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;text-align:center;padding:40px 20px;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
-        <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69a30e2c95735c36dbfbbfe7.png" alt="Bienestar Emocional" style="width:64px;height:64px;"/>
+        <img src="https://assets.cdn.filesafe.space/ek1LQvM0Kyj7fll9nDO7/media/69d61f34a64a04ba15d897f3.svg" alt="Bienestar Emocional" style="width:64px;height:64px;"/>
         <div style="font-family:'Poltawski Nowy',serif;font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.15;">Gracias por completar el<br>Módulo de <span style="color:#ffcb3c;">Bienestar Emocional</span></div>
       </div>
       <button class="btn" type="button" onclick="renderResultAndSend()" style="padding:0 40px;">Ver mis Resultados</button>
