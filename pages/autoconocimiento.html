@@ -295,7 +295,7 @@ function renderQuestion(){
   $("nextBtn").style.display=idx<items.length-1?"inline-flex":"none";
   $("submitBtn").style.display="none";
   const sel=answers.get(key);
-  $("panel").innerHTML=`<div class="q-title">${text}</div><div style="display:flex;justify-content:center;"><div class="scale-wrap"><div class="scale-row" role="radiogroup">${[1,2,3,4,5].map(v=>`<label class="scale-opt" data-val="${v}" data-checked="${sel===v}"><input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}\/></label>`).join("")}</div><div class="scale-labels"><span class="left">Muy en desacuerdo</span><span class="right">Muy de acuerdo</span></div></div></div>`;
+  $("panel").innerHTML=`<div class="q-title">${text}</div><div style="display:flex;justify-content:center;"><div class="scale-wrap"><div class="scale-row" role="radiogroup">${[1,2,3,4,5].map(v=>`<label class="scale-opt" data-val="${v}" data-checked="${sel===v}"><input type="radio" name="${key}" value="${v}" ${sel===v?"checked":""}\/></label>`).join("")}</div><div class="scale-labels"><span>Muy en desacuerdo</span><span>Muy de acuerdo</span></div></div></div>`;
   animIn();
   $("panel").querySelectorAll(".scale-opt").forEach(el=>{
     el.addEventListener("click",()=>{
