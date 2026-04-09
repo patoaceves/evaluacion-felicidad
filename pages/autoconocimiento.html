@@ -161,7 +161,7 @@ h1{font-family:'Poltawski Nowy',serif;font-size:1.7rem;font-weight:700;line-heig
     </div>
     <div class="stage"><div id="panel" class="panel in"></div></div>
     <div class="controls">
-      <button id="prevBtn" class="btn secondary" type="button">Anterior</button>
+      <button id="prevBtn" class="btn secondary" type="button">← Regresar</button>
       <div style="display:flex;gap:10px">
         <button id="nextBtn" class="btn" type="button">Siguiente</button>
         <button id="submitBtn" class="btn" type="button" style="display:none">Ver resultado</button>
@@ -292,7 +292,7 @@ function renderQuestion(){
   const[key,text]=items[idx];
   updateProgress();
   $("validation").textContent="";
-  $("prevBtn").disabled=idx===0;
+  $("prevBtn").textContent=idx===0?"← Regresar":"Anterior";$("prevBtn").disabled=false;
   $("nextBtn").style.display=idx<items.length-1?"inline-flex":"none";
   $("submitBtn").style.display="none";
   const sel=answers.get(key);
@@ -309,7 +309,7 @@ function renderQuestion(){
   });
 }
 
-$("prevBtn").addEventListener("click",()=>{if(idx>0){idx--;renderQuestion();}});
+$("prevBtn").addEventListener("click",()=>{if(idx>0){idx--;renderQuestion();}else{hide("step-quiz");show("step-greeting");}});
 $("nextBtn").addEventListener("click",()=>{if(!answers.get(items[idx][0])){$("validation").textContent="Selecciona una opci\u00f3n para continuar.";return;}if(idx<items.length-1){idx++;renderQuestion();}});
 $("submitBtn").addEventListener("click",()=>{renderResultAndSend();});
 
