@@ -228,10 +228,11 @@ const items = [
 ];
 
 const bandTexts = {
-  "Alto":  {color:"#2E7D32",lead:"Bienestar emocional s\u00f3lido. Reconoces, reg\u00falas y expres\u00e1s tus emociones con fluidez. Tu vida afectiva es un recurso, no un obst\u00e1culo.",steps:["Diario de gratitud (5 min cada noche). Anota 3 momentos emocionalmente positivos del d\u00eda.","Practica la escucha activa en una conversaci\u00f3n dif\u00edcil esta semana."]},
-  "Medio": {color:"#C88D2D",lead:"Vas bien encaminado. Hay momentos de claridad emocional, pero tambi\u00e9n de reacci\u00f3n autom\u00e1tica. Con pr\u00e1ctica consistente puedes estabilizar tu bienestar.",steps:["Pausa de 90 segundos (diario). Cuando sientas una emoci\u00f3n intensa, n\u00f3mbrala y espera antes de actuar.","Registro emocional semanal: anota qu\u00e9 sentiste, qu\u00e9 lo deton\u00f3 y c\u00f3mo respondiste."]},
-  "Bajo":  {color:"#B00020",lead:"Punto de partida claro. Las emociones pueden sentirse abrumadoras o difusas. La buena noticia: la inteligencia emocional se aprende y se entrena.",steps:["Nombra una emoci\u00f3n al d\u00eda (diario, 2 min). Solo identificarla ya cambia tu relaci\u00f3n con ella.","Rutina de cierre del d\u00eda (5 min): \u00bfqu\u00e9 sent\u00ed hoy? \u00bfqu\u00e9 necesitaba?"]},
-  note:"Nota: Estos resultados no son diagn\u00f3sticos. \u00dasalos como l\u00ednea base y vuelve a medir tras 2\u20134 semanas."
+  "Fortaleza Actual": {color:"#2E7D32",lead:"Posees una inteligencia emocional madura que te permite nombrar tus sentimientos con claridad y gestionarlos con sabiduría. No reprimes lo que sientes ni permites que los impulsos te desborden; mantienes una paz interior que te convierte en un pilar de resiliencia para ti y para los demás.",steps:["Practica la ‘mente sabia’ 5 min al día: ¿qué siento? ¿qué necesito?","Cultiva una emoción positiva intencional cada día: gratitud, serenidad o alegría."]},
+  "Zona de Crecimiento": {color:"#1565C0",lead:"Gestionas tus emociones de manera funcional para cumplir con tus roles, pero a menudo las racionalizas en exceso para evitar sentirlas plenamente. Tu oportunidad reside en usar tus emociones como información valiosa, no como obstáculos que debes vencer.",steps:["Escribe durante 5 min sobre lo que sientes, sin censura ni análisis.","Practica ‘saborear’ un momento positivo del día por al menos 2 minutos."]},
+  "Área de Atención": {color:"#C88D2D",lead:"Mantienes una compostura externa efectiva, pero el costo emocional de ‘aguantar’ está siendo demasiado alto. A menudo tratas tus emociones como hechos absolutos, cayendo en razonamiento emocional que te desconecta de tus necesidades más profundas.",steps:["Practica verificar los hechos: separa lo que sientes de lo que realmente ocurrió.","Identifica una necesidad emocional no satisfecha y commúnicala esta semana."]},
+  "Área Vulnerable": {color:"#B00020",lead:"Experimentas un alto nivel de sufrimiento o desregulación que te hace sentir frecuentemente abrumado por ansiedad, tristeza o ira. Es posible que vivas en anestesia emocional para evitar el dolor, lo cual solo prolonga el ciclo de malestar y vacío.",steps:["Busca apoyo profesional esta semana; no tienes que atravesar esto solo.","Elige una micro-acción de autocuidado hoy: dormir bien, caminar, llamar a alguien."]},
+  note:"Nota: Estos resultados no son diagnósticos. Úsalos como línea base y vuelve a medir tras 2–4 semanas."
 };
 
 let participant = {recordId:"",id:"",nombre:"",apellidos:"",email:""};
@@ -330,7 +331,7 @@ function showConfirm(){
 
 function computeTotal(){let s=0;items.forEach(([k])=>{const v=answers.get(k);if(v)s+=v;});return s;}
 function pctFromTotal(t){return Math.max(0,Math.min(100,Math.round(((t-8)/32)*100)));}
-function bandForPct(p){return p<=45?"Bajo":p<=75?"Medio":"Alto";}
+function bandForTotal(t){if(t<=10)return"Área Vulnerable";if(t<=20)return"Área de Atención";if(t<=30)return"Zona de Crecimiento";return"Fortaleza Actual";}
 
 async function saveToAirtable(){
   if(!TOKEN_EVALUACIONES)return{ok:false,msg:"Falta EVALUACION_FELICIDAD en Vercel."};
@@ -392,11 +393,11 @@ function drawWedge(container,pct){
 }
 
 function renderResultAndSend(skipSave=false){
-  const total=computeTotal(),pct=pctFromTotal(total),band=bandForPct(pct),bt=bandTexts[band],ini=(participant.nombre||participant.id).charAt(0).toUpperCase();
+  const total=computeTotal(),pct=pctFromTotal(total),band=bandForTotal(total),bt=bandTexts[band],ini=(participant.nombre||participant.id).charAt(0).toUpperCase();
   $("bar").style.width="100%";$("qIndex").textContent="Resultado";
   ["prevBtn","nextBtn","submitBtn"].forEach(id=>$(id).style.display="none");
   hide("step-quiz");hide("step-confirm");show("step-result");
-  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>Nivel ${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1\u20132 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
+  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1\u20132 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
   drawWedge($("wedgeMount"),pct);
   if(!skipSave) saveToAirtable(); // guarda silenciosamente
 }

@@ -228,9 +228,10 @@ const items = [
 ];
 
 const bandTexts = {
-  "Alto":  {color:"#2E7D32",lead:"Bienestar físico sólido. Tu cuerpo es un aliado activo. Movimiento, descanso y alimentación trabajan a tu favor de manera consistente.",steps:["Añade un reto físico nuevo cada mes para mantener la motivación y el progreso.","Practica la recuperación activa: estiramientos o movilidad 10 min después de cada sesión."]},
-  "Medio": {color:"#C88D2D",lead:"Tienes buenas bases pero hay inconsistencia. Algunos hábitos funcionan, otros aún no están arraigados. Pequeños ajustes pueden marcar una gran diferencia.",steps:["Agenda tus sesiones de actividad física como citas inamovibles en tu semana.","Mejora un hábito a la vez: empieza por el sueño o la hidratación esta semana."]},
-  "Bajo":  {color:"#B00020",lead:"Tu cuerpo necesita atención. No es un juicio, es un punto de partida. Con cambios pequeños y consistentes puedes transformar tu energía y vitalidad.",steps:["Camina 20 minutos al día durante 2 semanas. Es el punto de entrada más efectivo.","Establece una hora fija para dormir esta semana y obsérvalo durante 7 días."]},
+  "Fortaleza Actual": {color:"#2E7D32",lead:"Tienes una relación de excelencia con tu cuerpo, al que no ves como un obstáculo, sino como el vehículo sagrado que sostiene tu vida. Respetas tus ciclos biológicos y has trascendido el mantenimiento básico para habitar una auténtica vitalidad que potencia tu capacidad de sentir y actuar con total claridad.",steps:["Diseña un ritual de movimiento que disfrutes genuinamente (20 min diarios).","Prioriza 7–8 horas de sueño esta semana como acto de respeto a tu cuerpo."]},
+  "Zona de Crecimiento": {color:"#1565C0",lead:"Tu cuerpo es funcional y te permite cumplir con las exigencias del día a día, pero es probable que lo cuides más por obligación que por deseo genuino de florecimiento. El reto es integrar el disfrute en tus hábitos, permitiendo que el movimiento y la nutrición sean actos de gratitud.",steps:["Agrega una actividad física que disfrutes al menos 3 veces esta semana.","Prepara al menos una comida consciente y nutritiva al día."]},
+  "Área de Atención": {color:"#C88D2D",lead:"Estás operando en un nivel de ‘mantenimiento forzado’ donde el descuido de tus ritmos naturales empieza a limitar tu potencial. El agotamiento acumulado indica que tu cuerpo está dejando de ser un aliado para convertirse en una preocupación constante.",steps:["Establece una hora fija para dormir esta semana y respétala.","Incorpora 10 min de movimiento suave al despertar (caminata, estiramiento)."]},
+  "Área Vulnerable": {color:"#B00020",lead:"Te encuentras operando en números rojos, sacrificando sistemáticamente necesidades biológicas básicas por atender urgencias que son menos críticas que tu salud. Tu cuerpo está gritando por atención y este descuido pone en riesgo severo tu capacidad de sentir, pensar y actuar.",steps:["Deténte hoy: duerme mínimo 7 horas esta noche sin negociar.","Consulta a un profesional de salud esta semana; tu cuerpo lo necesita urgentemente."]},
   note:"Nota: Estos resultados no son diagnósticos. Úsalos como línea base y vuelve a medir tras 2–4 semanas."
 };
 
@@ -330,7 +331,7 @@ function showConfirm(){
 
 function computeTotal(){let s=0;items.forEach(([k])=>{const v=answers.get(k);if(v)s+=v;});return s;}
 function pctFromTotal(t){return Math.max(0,Math.min(100,Math.round(((t-8)/32)*100)));}
-function bandForPct(p){return p<=45?"Bajo":p<=75?"Medio":"Alto";}
+function bandForTotal(t){if(t<=10)return"Área Vulnerable";if(t<=20)return"Área de Atención";if(t<=30)return"Zona de Crecimiento";return"Fortaleza Actual";}
 
 async function saveToAirtable(){
   if(!TOKEN_EVALUACIONES)return{ok:false,msg:"Falta EVALUACION_FELICIDAD en Vercel."};
@@ -392,11 +393,11 @@ function drawWedge(container,pct){
 }
 
 function renderResultAndSend(skipSave=false){
-  const total=computeTotal(),pct=pctFromTotal(total),band=bandForPct(pct),bt=bandTexts[band],ini=(participant.nombre||participant.id).charAt(0).toUpperCase();
+  const total=computeTotal(),pct=pctFromTotal(total),band=bandForTotal(total),bt=bandTexts[band],ini=(participant.nombre||participant.id).charAt(0).toUpperCase();
   $("bar").style.width="100%";$("qIndex").textContent="Resultado";
   ["prevBtn","nextBtn","submitBtn"].forEach(id=>$(id).style.display="none");
   hide("step-quiz");hide("step-confirm");show("step-result");
-  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>Nivel ${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1–2 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
+  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1–2 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
   drawWedge($("wedgeMount"),pct);
   if(!skipSave) saveToAirtable(); // guarda silenciosamente
 }

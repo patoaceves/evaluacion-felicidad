@@ -228,9 +228,10 @@ const items = [
 ];
 
 const bandTexts = {
-  "Alto":  {color:"#2E7D32",lead:"Alta presencia consciente. Vives el momento con intención. Tu atención es un músculo bien entrenado que enriquece tus experiencias y relaciones.",steps:["Practica la 'pausa de 3 respiraciones' antes de cada reunión o actividad importante.","Experimenta con meditación de movimiento (yoga, caminata consciente) para profundizar."]},
-  "Medio": {color:"#C88D2D",lead:"Presencia intermitente. Hay momentos de conexión real con el presente, pero la mente viaja con frecuencia. Con práctica diaria puedes estabilizar tu atención.",steps:["5 minutos de respiración consciente cada mañana antes de revisar el teléfono.","Elige una actividad al día para hacerla con atención plena: comer, ducharte, caminar."]},
-  "Bajo":  {color:"#B00020",lead:"La mente tiende a estar en otro lugar. Es común en el mundo actual, pero tiene un costo en bienestar y relaciones. El entrenamiento de la atención empieza con pequeños pasos.",steps:["Instala un recordatorio 3 veces al día: '¿Dónde está mi atención ahora?'","Practica 2 minutos de respiración consciente antes de dormir durante 2 semanas."]},
+  "Fortaleza Actual": {color:"#2E7D32",lead:"Posees la habilidad del ‘saber estar’: no vives secuestrado por la ansiedad del futuro ni por la rumiación del pasado. Tienes la capacidad de habitar el aquí y ahora con apertura que te permite conectar profundamente con las personas y disfrutar de los detalles sutiles de la vida que a otros se les escapan.",steps:["Practica 10 min de meditación formal cada mañana para sostener tu base.","Al finalizar el día, identifica 3 momentos de presencia genuina que viviste."]},
+  "Zona de Crecimiento": {color:"#1565C0",lead:"Vives en intermitencia consciente: logras momentos de conexión real, pero con frecuencia tu mente se fuga al piloto automático. Tu reto es entrenar la atención para que los instantes de lucidez dejen de ser accidentes y se conviertan en un hábito deliberado.",steps:["Practica pausas de 2 min, 3 veces al día, solo respirando y observando.","Elige una actividad diaria (comer, caminar) para hacerla con atención plena total."]},
+  "Área de Atención": {color:"#C88D2D",lead:"Pasas la mayor parte de tus jornadas reaccionando automáticamente a estímulos externos. Tu atención está fragmentada por la multitarea digital o por una mente que ya está sufriendo por los problemas de la próxima semana.",steps:["Elimina el celular de la mesa durante las comidas esta semana.","Practica 5 respiraciones profundas antes de responder cualquier mensaje o correo."]},
+  "Área Vulnerable": {color:"#B00020",lead:"Vives en desconexión profunda del presente, atrapado en rumiación o distracciones constantes. Esta ausencia mental no solo genera estrés paralizante, sino que levanta un muro entre tú y las personas que más valoras.",steps:["Apaga notificaciones 1 hora al día y simplemente observa tu entorno.","Busca apoyo profesional o un grupo de práctica de mindfulness esta semana."]},
   note:"Nota: Estos resultados no son diagnósticos. Úsalos como línea base y vuelve a medir tras 2–4 semanas."
 };
 
@@ -330,7 +331,7 @@ function showConfirm(){
 
 function computeTotal(){let s=0;items.forEach(([k])=>{const v=answers.get(k);if(v)s+=v;});return s;}
 function pctFromTotal(t){return Math.max(0,Math.min(100,Math.round(((t-8)/32)*100)));}
-function bandForPct(p){return p<=45?"Bajo":p<=75?"Medio":"Alto";}
+function bandForTotal(t){if(t<=10)return"Área Vulnerable";if(t<=20)return"Área de Atención";if(t<=30)return"Zona de Crecimiento";return"Fortaleza Actual";}
 
 async function saveToAirtable(){
   if(!TOKEN_EVALUACIONES)return{ok:false,msg:"Falta EVALUACION_FELICIDAD en Vercel."};
@@ -392,11 +393,11 @@ function drawWedge(container,pct){
 }
 
 function renderResultAndSend(skipSave=false){
-  const total=computeTotal(),pct=pctFromTotal(total),band=bandForPct(pct),bt=bandTexts[band],ini=(participant.nombre||participant.id).charAt(0).toUpperCase();
+  const total=computeTotal(),pct=pctFromTotal(total),band=bandForTotal(total),bt=bandTexts[band],ini=(participant.nombre||participant.id).charAt(0).toUpperCase();
   $("bar").style.width="100%";$("qIndex").textContent="Resultado";
   ["prevBtn","nextBtn","submitBtn"].forEach(id=>$(id).style.display="none");
   hide("step-quiz");hide("step-confirm");show("step-result");
-  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>Nivel ${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1–2 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
+  $("step-result").innerHTML=`<div class="p-bar"><div class="p-av">${ini}</div><div><div class="p-name">${participant.nombre} ${participant.apellidos}</div><div class="p-id-txt">ID: ${participant.id}</div></div></div><div class="result-grid"><div><div class="wedge-wrap"><div id="wedgeMount"></div><div class="pct-label">${pct}%</div></div></div><div><div class="band-tag" style="color:${bt.color}"><span class="band-dot"></span>${band}</div><div class="result-title">${MODULE}</div><p class="result-lead">${bt.lead}</p><div class="steps-label">Siguiente paso (1–2 semanas)</div><ul class="steps-list">${bt.steps.map(s=>`<li>${s}</li>`).join("")}</ul><p class="result-note">${bandTexts.note}</p><button class=\"btn secondary\" onclick=\"window.location.href='/?'+new URLSearchParams({id:participant.id}).toString()\">← Volver a Módulos</button></div></div>`;
   drawWedge($("wedgeMount"),pct);
   if(!skipSave) saveToAirtable(); // guarda silenciosamente
 }
